@@ -1,0 +1,5 @@
+1. Con composer: composer create-project --prefer-dist laravel/laravel "nombre"
+2. Con php artisan list   Se puede ver una lista de los comandos disponibles con artisan
+2.1  Escribiendo cualquiera de los comandos listados le podemos pasar el flag "-h" y con ello obtendremos mas claridad del que hace cada comando y que dato espera.
+2.2 Como por ejemplo: php arisan make:controller -h    Este serviria para ver la ayuda de ese comando.
+3. 
