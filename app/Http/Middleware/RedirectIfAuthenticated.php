@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace LaraPok\Http\Middleware;
 
-use App\Providers\RouteServiceProvider;
+use LaraPok\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
