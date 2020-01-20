@@ -1,9 +1,24 @@
 1. Con composer: composer create-project --prefer-dist laravel/laravel "nombre"
 2. Con php artisan list   Se puede ver una lista de los comandos disponibles con artisan
-2.1  Escribiendo cualquiera de los comandos listados le podemos pasar el flag "-h" y con ello obtendremos mas claridad del que hace cada comando y que dato espera.
+2.1  Escribiendo cualquiera de los comandos listados le podemos pasar el flag "-h" y con ello obtendremos mas claridad del que 
+hace cada comando y que dato espera.
 2.2 Como por ejemplo: php arisan make:controller -h    Este serviria para ver la ayuda de ese comando.
 3. Podemos darle nombre a nuestra aplicacion a traves del comando php artisan app:name "nombre"
-3.1 Si al ejecutar el comando anterior da el siguiente mensaje: "There are no commands defined in the "app" namespace" deberas solucionarlo con lo siguiente: composer require andrey-helldar/laravel-app --dev (y con esto ya puedes repetir el punto 3.)
+3.1 Si al ejecutar el comando anterior da el siguiente mensaje: "There are no commands defined in the "app" namespace" 
+deberas solucionarlo con lo siguiente: composer require andrey-helldar/laravel-app --dev (y con esto ya puedes repetir 
+el punto 3.)
 4. Cambiar dentro de config/app.php modificar el time zone por: America/Caracas (asi en mi caso)
 5. Alli mismo cambiar el idioma: 'locale' => 'es,
-6. Ahora para que exista el idioma espanol dentro de nuestro proyexto debemos ir a resorces/lang/ crear una nueva carpeta llamado "es" alli crear cada una de los archivos encontrados en la carpeta "en" y sacando del repositorio (https://github.com/caouecs/Laravel-lang) entramos a src/ y alli buscamos es/ y vamos copiando la informacion en los archivos requeridos.
+6. Ahora para que exista el idioma espanol dentro de nuestro proyexto debemos ir a resorces/lang/ crear una nueva 
+carpeta llamado "es" alli crear cada una de los archivos encontrados en la carpeta "en" y sacando del repositorio 
+(https://github.com/caouecs/Laravel-lang) entramos a src/ y alli buscamos es/ y vamos copiando la informacion en los 
+archivos requeridos.
+7.Recordar que HTTP es el protocolo de comunicacion que permite las transferencias de informacion en la WWW World Wide Web
+La Http define una serie de metodos para poder hacer uso de los recursos disponibles, entre estos metodos esta GET. El GET solicita
+una representaccion del recurso solicitado. Esta POST el cual envia los datos para que sea procesados por el recurso.
+Otro metodo es el PUT / PATCH se utilizan para actualizar un recuros especifico. Tambien esta el DELETE que borra un recurso especifico.
+8.
+
+
+
+Quede en el video #7 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
