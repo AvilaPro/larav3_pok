@@ -17,8 +17,29 @@ archivos requeridos.
 La Http define una serie de metodos para poder hacer uso de los recursos disponibles, entre estos metodos esta GET. El GET solicita
 una representaccion del recurso solicitado. Esta POST el cual envia los datos para que sea procesados por el recurso.
 Otro metodo es el PUT / PATCH se utilizan para actualizar un recuros especifico. Tambien esta el DELETE que borra un recurso especifico.
-8.
+8.ROUTES Las Rutas y su importancia.
+En la carpeta "routes" tenemos una ruta llamada web.php.
+Si escribimos en la consola php artisan serve nos cargara la vista en la ruta de la ip de laravel
+Como podemos crear nuestras propia ruta? Pues en el archivo mecionado se copia lo siguiente:
+Route:: con el verbo HTTP get y un nombre a esa ruta, dentro de los parametros del get podemos colocar uestra closure que no es mas que una funcion.
+Queda asi: Route::get('/nombre_ruta', function(){
+    return 'Hello World, es mi primera ruta :P';
+});
+Podemos ver esta nueva ruta colocandola en el navegador.
+Con 127.0.0.1:8000/nombre_ruta
+Tambien podemos recibir informacion como parametro dentro de nuestra ruta
+Ruta con parametro: 
+Route::get('/name/{name}', function($name){
+    return 'Hola soy '. $name . ' '. $lastname;
+});
+para poder accesar correctamente a las rutas que reciben parametros debemos ingresar todos los parametros que le pensamos pasar.
+Sin embargo podemos colocar valores por defecto a los parametros e indicar que dichos parametros son opcionales.
+Como se hace eso? Pues escribiendo como sigue:
+Route::get('/name/{name}/lastname/{lastname?}', function($name, $lastname = null){
+    return 
+});
+Aqui el parametro name es obligatorio por lo que debe pasarse obligatoriamente y el parametro lastname no es obligatorio y por ende se le da un posible valor por defecto (en este caso null)
 
 
 
-Quede en el video #7 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #9 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
