@@ -68,7 +68,28 @@ Pues vamos a las rutas y hacemos los siguiente en el archivo web.php
 //el nombre del controladora y con un '@' colocamos la funcion que debera ejecutarse
 Route::get('prueba/{name}', 'PruebaController@prueba'); //paso2 cap9
 //Aqui se le pasa por parametro si se desea un valor que se manejara en le controlador
+10. CONTROLADORES Crear un enrutado Rest Full
+Esto de REST Full se refiere a un end-point que implementa REST. REST es o se define un conjunto 
+de principios arquitectónicos por los que se pueden diseñar servicios Web que se centran en 
+los recursos de un sistema, lo que incluye la forma en que los estados de los recursos se 
+dirigen y transfieren a través de HTTP por un amplio rango de clientes que están escritos en 
+diferentes lenguajes.
+Para empezar a trabajar con Rest en laravel podemos aprovechar la herramienta de 
+laravel: Resource Controller
+el comando es de terminal: php artisan make:controller TrainerController --resource
+En nuestro caso fue ese porque es el controlador que se usara para cada "entrenador" Poke.
+Este controlador se encuentra en la ruta especificada que hablamos en el punto 9.
+App/Http/Controllers
+En este controlador creado con artisan ya estara completamente el CRUD creado.
+Podemos crear la ruta del mismo en nuestro archivo web.php como sigue:
+Route::resource('trainers','TrainerController');
+//Con esta ruta definida sabremos que tenemos acceso a nuestro controlador. //cap 10
+//Como lo sabemos? Pues es lo que esta expuesto en la documentacion de laravel en #Resource Controller
+Aqui dejo al URl actual de la documentacion: https://laravel.com/docs/6.x/controllers#resource-controllers
+Tambien dentro de nuestro controlador creado en el index colocamos esto para probar que funciona:
+ return 'Hola desde el controlador Trainers';
 
 
 
-Quede en el video #10 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+Quede en el video #11 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
