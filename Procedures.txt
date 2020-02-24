@@ -110,8 +110,17 @@ Para introducir contenido html a la directiva padre se usa la directiva @section
 Dentro se escribe el html a ser usado
 Se cierra con un @endsection
 Nota: no todas las directivas @section ameritan ser abiertas y cerradas, solo se cierran aquellas que contengan estructura html
+13. HTTP Requests
+Los Requests es el servicio de poder ejecutar en si en CRUD.
+Para nuestro ejemplo vamos a crear el nuevo Trainer. Para ello debemos englobar lo que hemos creado en la vista create dentro de un form.
+Como sigue: <form class="form-group" action="/trainers" method="POST">
+La clase es la de Bootstrap, el metodo es POST y el action tal como se ve en la documentacion 
+de laravel es la ruta que ah de seguir nuestra Requests (peticion) que sera manejada en nuestro
+controlador en la funcion store().
+Como sigue:  return $request->input('name'); //Con esto solo vemos el atributo del input que llamamos name
+            //return $request->all();//Esto para visualizar el objeto en si que se esta pasando.
 
 
 
 
-Quede en el video #13 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #14 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
