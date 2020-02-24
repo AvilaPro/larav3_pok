@@ -127,6 +127,34 @@ Eloquent proporciona una implementacio de ActiveRecord bella y sencilla para tra
 base de datos. Cada tabla tiene un "Modelo" correspondiente que se utiliza para interactuar con esa tabla.
 Los modelos le permiten consultar datos en sus tablas, asi como insertar nuevos registros en la misma.
 "Modelo": Es la representacion de la informacion. Su trabajo: gestionar dicha informacion.
+15. Modelos y Migraciones
+Como crear un modelo: php artisan make:model Trainer //Eloquent establece que el nombre de los modelos debe ser en singular OJO
+Se puede crear el modelo y de una la migracion; como sigue:
+php artisan make:model Trainer --migration  //con este flag --migration o -m establecemos crear la migracion y el modelo de una vez.
+El modelo estara en app. Y la migracion estara en database/migrations
+En el archivo de la migracion nosotros podemos a traves de comando establecer que campos tendra
+la tabla de nuestro modelo. En la documentacion: https://laravel.com/docs/6.x/migrations
+Podemos encontrar los distintos comandos que podemos usar en nuestra creacion de columnas de nuestro modelo.
+Notemos que el archivo de migracion contiene una class con dos metodos uno es up() y otro down()
+notablemente cada uno de ellos lo que hace es o crear la tabla o eliminarla.
+Dentro del metodo up(), se ve originalmente como sigue:
+public function up()
+    {
+        Schema::create('trainers', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->timestamps();
+        });
+    }
+Nosotros para nuestro caso solo incluiremos el comando para guardar el nombre del trainer:
+$table->string('name');
+Ahora debemos acomodar el controlador que se encargara de almacenar el nuevo trainer, como sigue:
+$trainer = new Trainer();
+$trainer->name = $request->input('name');
+$trainer->save;
+
+
+
+
 
 
 
