@@ -99,9 +99,19 @@ el debera mostrar dicha vista de la siguiente forma: return view('trainers.creat
 En nuestra vista (create.blade.php) creamos la estructura html que vamos a mostrar. Ademas podemos
 linkear el Bootstrap CDN para que sea mas facil crear la estructura.
 Para obtener el Bootstrap CDN: https://getbootstrap.com/docs/3.3/getting-started/
+12. BLADE
+Blade es una herramienta que implementa laravel para crear plantillas dentro sus aplicaciones.
+Para trabajar con Blade basta con conocer sus directivas.
+Primero se recomienda crear una carpeta dentro de views llamada layouts/
+Alli podemos crear nuestras clases padres de plantillas blade
+Para establecer directivas de clase padre se usa la directiva @yield('nombre') 
+Para que una plantilla pueda ser usada en otra vista se usa la directiva @extends('layouts.nameLayout')
+Para introducir contenido html a la directiva padre se usa la directiva @section('nameLayout')
+Dentro se escribe el html a ser usado
+Se cierra con un @endsection
+Nota: no todas las directivas @section ameritan ser abiertas y cerradas, solo se cierran aquellas que contengan estructura html
 
 
 
 
-
-Quede en el video #12 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #13 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
