@@ -119,7 +119,14 @@ de laravel es la ruta que ah de seguir nuestra Requests (peticion) que sera mane
 controlador en la funcion store().
 Como sigue:  return $request->input('name'); //Con esto solo vemos el atributo del input que llamamos name
             //return $request->all();//Esto para visualizar el objeto en si que se esta pasando.
-
+14. ORM Object Relational Mapping
+Es una tecnica de programacion para convertir datos utilizando un lenguaje de programacion orientado
+a objetos y la utilizacion de una base de datos relacional como motor de persistencia.
+Ahora bien con PHP trabajamos en Laravel con Eloquent
+Eloquent proporciona una implementacio de ActiveRecord bella y sencilla para trabajar con nuestra
+base de datos. Cada tabla tiene un "Modelo" correspondiente que se utiliza para interactuar con esa tabla.
+Los modelos le permiten consultar datos en sus tablas, asi como insertar nuevos registros en la misma.
+"Modelo": Es la representacion de la informacion. Su trabajo: gestionar dicha informacion.
 
 
 
