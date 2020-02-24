@@ -88,8 +88,20 @@ Route::resource('trainers','TrainerController');
 Aqui dejo al URl actual de la documentacion: https://laravel.com/docs/6.x/controllers#resource-controllers
 Tambien dentro de nuestro controlador creado en el index colocamos esto para probar que funciona:
  return 'Hola desde el controlador Trainers';
+11. VIEWS Vistas
+Una vista es la capa de presentacion en como mostramos informacion a un usuario.
+Como deseamos tener una vista para el registro de un trainer debemos crearla y ademas
+invocarla desde el controlador de trainers.
+En TrainerController en la funcion create() retornaremos la vista para crear dicho trainer.
+En la carpeta de resources/views/ crearemos una subcarpeta para todo lo que tenga que ver con
+los trainer. Dentro crearemos el archivo create.blade.php y en el controlador le indicaremos que
+el debera mostrar dicha vista de la siguiente forma: return view('trainers.create');
+En nuestra vista (create.blade.php) creamos la estructura html que vamos a mostrar. Ademas podemos
+linkear el Bootstrap CDN para que sea mas facil crear la estructura.
+Para obtener el Bootstrap CDN: https://getbootstrap.com/docs/3.3/getting-started/
 
 
 
 
-Quede en el video #11 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+Quede en el video #12 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
