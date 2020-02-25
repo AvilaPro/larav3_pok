@@ -2,6 +2,8 @@
 
 namespace LaraPok\Http\Controllers;
 
+use LaraPok\Trainer;
+
 use Illuminate\Http\Request;
 
 class TrainerController extends Controller
@@ -36,7 +38,9 @@ class TrainerController extends Controller
     {
         $trainer = new Trainer();
         $trainer->name = $request->input('name');
-        $trainer->save;
+        $trainer->save();
+
+        return 'Saved';
         //return $request->input('name'); //Con esto solo vemos el atributo del input que llamamos name
         //return $request->all();//Esto para visualizar el objeto en si que se esta pasando.
     }

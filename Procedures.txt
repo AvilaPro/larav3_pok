@@ -150,9 +150,58 @@ $table->string('name');
 Ahora debemos acomodar el controlador que se encargara de almacenar el nuevo trainer, como sigue:
 $trainer = new Trainer();
 $trainer->name = $request->input('name');
-$trainer->save;
-
-
+$trainer->save();
+16. MySQL
+Laravel soporta los siguientes gestores de base de datos:
+MySQL 5.6+ 
+PostgreSQL 9.4+ 
+SQLite 3.8.8+
+SQL Server 2017+ 
+Como llevar a cabo la configuracion: ir a config/database.php
+Si vemos el archivo tiene las configuraciones necesarias para trabajar con cada gestor alli.
+Si notamos entre las palabras reservada alli usadas veremos al enviroment 'env'
+Este archivo .env esta en la raiz de nuestro proyecto y debe ser configurado en cada equipo que haya de ser usado
+Porque? Pues porque es un archivo que esta ignorado por defecto en git y naturalmente debe ser asi
+pues este archivo contiene informacion de credenciales para acceder a la base de datos.
+Por ello si ejecutas el proyecto en otro equipo pues deberas configurar con antelacion el archivo .env antes de hacer cualquier prueba.
+En mi caso actal, uso Wamp para levantar el servidor en mi PC asi que el archivo .env es modificado como sigue:
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=larapok_development
+DB_USERNAME=root
+DB_PASSWORD=
+Una vez configurado el .env, me tome la molestia de crear manualmente la base de datos "larapok_development"
+con ayuda del gesto de base de datos Workbench.
+Ya una vez que tengo la base de datos creado procedo a la consola a tratar de ejecuar la migracion
+con el comando: php artisan migrate
+Al ejecutar la consola me arroja este error:
+ Illuminate\Database\QueryException  : SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was 
+too long; max key length is 1000 bytes (SQL: alter table `users` add unique `users_email_unique`(`email`))
+A que se debe esto? Pues a que Laravel agrego el soporte para almacenar emojis dentro de nuestra
+base de datos, lo cual es que si usamos una version vieja de MySQL o de MariaDB.
+Esto lo podemos leer en la documentacion de Laravel:
+https://laravel.com/docs/6.x/migrations#running-migrations
+En la seccion: Index Lengths & MySQL / MariaDB
+Nos explican que podemos presentar este tipo de problemas y como solucionarlo.
+Siguiendo el consejo descrito en al documentacion de Laravel pues debes agregar lo que sigue:
+Schema::defaultStringLength(191);
+Dentro del AppServiceProvider
+Este archivo se encuentra en app/Providers..
+Escribimos dentro del metodo boot() tal como explica la documentacion y ademas incluir:
+use Illuminate\Support\Facades\Schema; Para poder hacer uso del Schema incluido..
+Vamos de nuevo a Workbench. Ejecutamos drop database para eliminar la base de datos y de nuevo:
+create database larapok_development.
+Una vez hecho esto pues sencillamente ejecutamos en la consola:
+php artisan migrate
+Ya una vez que hemos creado correctamente las migraciones a nuestra base de datos podemos ir
+a nuestra ruta: 127.0.0.1:8000/trainers/create 
+Para crear nuestro primer trainer.
+OJO Debemos estar atentos a lo siguiente. Si chequeamos nuestro archivo TrainerController.php
+vemos que deseamos crear un nuevo Trainer() que fue el modelo que creamos con anterioridad, pero
+este modelo no ha sido incluido dentro de nuestro archivo TrainerController.php.
+Para incluirlo debemos indicarselo como sigue:
+use LaraPok\Trainer;
 
 
 
