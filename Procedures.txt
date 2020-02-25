@@ -235,8 +235,52 @@ le pasa por parametro la variable almacenadora que estamos usando.
                 </div>
             </div>
         </div>
+18. Subir archivos
+Bien ahora vamos a ver como subimos las imagenes de los trainers a nuestra base de datos para ellos primero vamos a crear con la ayuda de artisan una nueva agregada del avatar a nuestra tabla de trainers:
+    php artisan make:migration add_avatar_to_trainers_table --table=trainers
+    //Aqui como vemos recibe un nombre la migracion y un flag que es a que tabla se va a agregar dicha migracion.
+Una vez creada nuestra migracion pues simplemente alli (database/migrations/) vamos a agregar un campo mas a nuestra tabla de trainers y vamos simplemente a indicarle de que tipo sera este nuevo campo.
+    public function up()
+    {
+        Schema::table('trainers', function (Blueprint $table) {
+            $table->string('avatar');
+        });
+    }
+Este campo nuevo es de tipo string puesto que no guardaremos directamente la imagen en la base de datos sino que guardaremos una referencia de la misma (No se recomienda guardar en las bases de datos la imagen en si, se guarda en cambio la referencia o Path de la misma).
+Ejecutamos en la consola:
+    php artisan migrate
+Lo siguiente es modificar el formulario de creacion de trainers:
+    <div class="form-group">
+        <input type="file" name="avatar">            
+        <label for="">Avatar</label>
+    </div>
+Ademas debemos agregar el enctype como sigue a la etiqueta <form> para que envie correctamente la informacion:
+    <form class="form-group" action="/trainers" method="POST" enctype="multipart/form-data">
+Ahora en la consola levantamos la aplicacion 
+    php artisan serve
+Ahora recordemos que quien se hace cargo de esa peticion es el controlador.
+Debemos ir a nuestro controlador y al metodo store() comentamos lo que ya teniamos y agregamos temporalmente lo siguiete:
+    return $request;
+Esto para ver en el navegador el objeto que se esta enviando y verlo correctamente.
+Una vez verificado que se envia bien el objeto modificamos como sigue:
+    public function store(Request $request)
+    {
+        if($request->hasFile('avatar')){ //se verifica que se este pasando un archivo
+            $file =$request->file('avatar');
+            $name = time().$file->getClientOriginalName(); //Se le asigan un nombre unico
+            $file->move(public_path().'/images/',$name) //Se guarda el archivo en nuestra carpeta public.
+            //return $name;
+        }
+        //return $request; //cap 18 para ve que se esta enviando en el browser
+        $trainer = new Trainer();
+        $trainer->name = $request->input('name');
+        $trainer->avatar = $name;
+        $trainer->save();
 
-
+        return 'Saved'; 
+Ya podemos verificar con ayuda de Workbench que todo se registra correctamente.
+Ahora debemos ir al index de nuestros trainer para poder agregar la imagen de cada trainer.
+    
 
 
 

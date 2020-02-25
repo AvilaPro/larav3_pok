@@ -39,11 +39,19 @@ class TrainerController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->hasFile('avatar')){ //se verifica que se este pasando un archivo
+            $file =$request->file('avatar');
+            $name = time().$file->getClientOriginalName(); //Se le asigan un nombre unico
+            $file->move(public_path().'/images/',$name); //Se guarda el archivo en nuestra carpeta public.
+            //return $name;
+        }
+        //return $request; //cap 18 para ve que se esta enviando en el browser
         $trainer = new Trainer();
         $trainer->name = $request->input('name');
+        $trainer->avatar = $name;
         $trainer->save();
 
-        return 'Saved';
+        return 'Saved'; //Comentario hecho en el cap 18. Para tratar o manipular lo recibido.
         //return $request->input('name'); //Con esto solo vemos el atributo del input que llamamos name
         //return $request->all();//Esto para visualizar el objeto en si que se esta pasando.
     }
