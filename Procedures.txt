@@ -280,8 +280,26 @@ Una vez verificado que se envia bien el objeto modificamos como sigue:
         return 'Saved'; 
 Ya podemos verificar con ayuda de Workbench que todo se registra correctamente.
 Ahora debemos ir al index de nuestros trainer para poder agregar la imagen de cada trainer.
-    
+19. Vista Trainers
+Buenos aqui solo se llevaron a vabo cambios en la forma en que se iban a presentar los trainer ejecutando cambios directamente en el codigo de la vista, que en nuestro caso corresponde al index.blade.php de trainers
+Se ejecuto como sigue:
+    @section('content')
+    <div class="row">
+        @foreach ($trainers as $trainer)
+            <div class="col-sm">
+                <div class="card text-center" style="width: 18rem; margin-top: 70px">
+                <img style="height: 150px; width:150px; backgroud-color: #EFEFEF; margin:20px" src="images/{{$trainer->avatar}}" alt="" class="card-img-top rounded-circle mx-auto d-block">
+                    <div class="card-body">
+                      <h5 class="card-title">{{$trainer->name}}</h5>
+                      <p class="card-text">{{$trainer->description}}</p>
+                      <a href="#" class="btn btn-primary">Conocer Mas</a>
+                    </div>
+                </div>
+            </div>
+        @endforeach
+    </div>
 
 
 
-Quede en el video #19 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+Quede en el video #20 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
