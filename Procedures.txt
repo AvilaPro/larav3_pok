@@ -349,9 +349,40 @@ Asi ayudandonos con esto podemos editar el metodo show() del controlador, como s
         return view('trainers.show', compact('trainer'));
         //return 'tengo que retornar el recurso con el id '.$id;
     }
+21. Slugs
+Es una forma amigable de representar el texto de nuestros enlaces.
+La funcionalidad principal que se desea tener con un slug es no mostrar variables en el URL del enlace.
+PORQUE? Pues sencillamente no queremos que nuestros usuarios finales puedan inferir de que forma se usan las variables en nuestra aplicacion.
+Creamos otro columna a la tabla de los trainers llamada slug que sera la clave con la que de ahora en adelante accederemos a los datos.
+En consola ejecutamos:
+    php artisan make:migration add_slug_to_trainers --table=trainers
+Vamos al archivo creado que ahora se encontrara en database/migrations y modificamos como sigue:
+    public function up()
+    {
+        Schema::table('trainers', function (Blueprint $table) {
+            $table->string('slug')->unique();
+        });
+    }
+    public function down()
+    {
+        Schema::table('trainers', function (Blueprint $table) {
+            $table->dropColumn('slug');
+        });
+    }
+Ambas funciones una para crear y otra para poder eliminar.
+Tambien debemos cambiar el metodo show() de nuestro controlador:
+    public function show($slug) //Definido el Implicit Binding en el controlador
+    {
+        $trainer = Trainer::where('slug','=',$slug)->firstOrFail();
+        //$trainer = Trainer::find($id);
+        //return $trainer;
+        return view('trainers.show', compact('trainer'));
+        //return 'tengo que retornar el recurso con el id '.$id;
+    }
+Ya no a traves del binding (con el uso del $id) sino a traves del slug.
 
 
 
 
 
-Quede en el video #21 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #22 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
