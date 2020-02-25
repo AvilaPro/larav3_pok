@@ -298,8 +298,60 @@ Se ejecuto como sigue:
             </div>
         @endforeach
     </div>
+20. Show de los trainers
+Ahora queremos mostrar mas detalle de los trainers
+Bien, tal como lo describe la documentacion de laravel en su seccion de controllers:
+    https://laravel.com/docs/6.x/controllers#resource-controllers
+Actions Handled By Resource Controller
+Verb	    URI	                    Action	    Route Name
+GET	        /photos	                index	    photos.index
+GET	        /photos/create	        create	    photos.create
+POST	    /photos	                store	    photos.store
+GET	        /photos/{photo} 	    show	    photos.show
+GET	        /photos/{photo}/edit    edit	    photos.edit
+PUT/PATCH	/photos/{photo}	        update  	photos.update
+DELETE	    /photos/{photo}	        destroy	    photos.destroy
+
+Tal como podemos ver en la tabla podemos valernos del metodo GET para accionar con Show una muestra de detalles del trainer a traves del boton que a este le hemos incluido.
+Como sigue:
+    <a href="/trainers/{{$trainer->id}}" class="btn btn-primary">Conocer Mas</a>
+Ahora vamos al controlador.
+En el metodo show() le decimos que debemos devolver la vista como sigue:
+    public function show($id)
+    {
+        return view('trainers.show');
+        //return 'tengo que retornar el recurso con el id '.$id;
+    }
+Creamos el nuevo archivo en las views/trainers:
+    show.blade.php
+Alli cargamos como se vera dicha vista:
+    @extends('layouts.app')
+
+    @section('title', 'Trainer')
+
+    @section('content')
+    <img style="height: 200px; width:200px; backgroud-color: #EFEFEF; margin:20px" src="/images/{{$trainer->avatar}}" alt="" class="card-img-top rounded-circle mx-auto d-block">
+    <div class="text-center">
+    <h5 class="card-title">{{$trainer->name}}</h5>
+        <p>{{$trainer->description}} </p>
+    </div>
+    @endsection
+Ahora veremos un poco del Implicit Binding
+Este lo que hace es resolver de manera automaticamente los modelos definidos en Eloquent.
+Como se puede ver en la documentacion de laravel:
+    https://laravel.com/docs/6.x/routing#implicit-binding
+Se ve que hay una ruta, un parametro $user y dentro del closure hay un modelo de tipo $user y como estas variables coinciden entonces Eloquent se encarga de cargar el modelo de manera automatica.
+Asi ayudandonos con esto podemos editar el metodo show() del controlador, como sigue:
+    public function show(Trainer $trainer) //Definido el Implicit Binding en el controlador
+    {
+        //$trainer = Trainer::find($id);
+        //return $trainer;
+        return view('trainers.show', compact('trainer'));
+        //return 'tengo que retornar el recurso con el id '.$id;
+    }
 
 
 
 
-Quede en el video #20 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+Quede en el video #21 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
