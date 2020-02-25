@@ -79,12 +79,12 @@ laravel: Resource Controller
 el comando es de terminal: php artisan make:controller TrainerController --resource
 En nuestro caso fue ese porque es el controlador que se usara para cada "entrenador" Poke.
 Este controlador se encuentra en la ruta especificada que hablamos en el punto 9.
-App/Http/Controllers
+    App/Http/Controllers
 En este controlador creado con artisan ya estara completamente el CRUD creado.
 Podemos crear la ruta del mismo en nuestro archivo web.php como sigue:
-Route::resource('trainers','TrainerController');
-//Con esta ruta definida sabremos que tenemos acceso a nuestro controlador. //cap 10
-//Como lo sabemos? Pues es lo que esta expuesto en la documentacion de laravel en #Resource Controller
+    Route::resource('trainers','TrainerController');
+    //Con esta ruta definida sabremos que tenemos acceso a nuestro controlador. //cap 10
+    //Como lo sabemos? Pues es lo que esta expuesto en la documentacion de laravel en #Resource Controller
 Aqui dejo al URl actual de la documentacion: https://laravel.com/docs/6.x/controllers#resource-controllers
 Tambien dentro de nuestro controlador creado en el index colocamos esto para probar que funciona:
  return 'Hola desde el controlador Trainers';
@@ -92,33 +92,38 @@ Tambien dentro de nuestro controlador creado en el index colocamos esto para pro
 Una vista es la capa de presentacion en como mostramos informacion a un usuario.
 Como deseamos tener una vista para el registro de un trainer debemos crearla y ademas
 invocarla desde el controlador de trainers.
-En TrainerController en la funcion create() retornaremos la vista para crear dicho trainer.
-En la carpeta de resources/views/ crearemos una subcarpeta para todo lo que tenga que ver con
+    En TrainerController en la funcion create() retornaremos la vista para crear dicho trainer.
+    En la carpeta de resources/views/ crearemos una subcarpeta para todo lo que tenga que ver con
 los trainer. Dentro crearemos el archivo create.blade.php y en el controlador le indicaremos que
 el debera mostrar dicha vista de la siguiente forma: return view('trainers.create');
 En nuestra vista (create.blade.php) creamos la estructura html que vamos a mostrar. Ademas podemos
 linkear el Bootstrap CDN para que sea mas facil crear la estructura.
-Para obtener el Bootstrap CDN: https://getbootstrap.com/docs/3.3/getting-started/
+    Para obtener el Bootstrap CDN: https://getbootstrap.com/docs/4.4/getting-started/introduction/
+    Si seguimos los pasos y las instrucciones alli dadas nos daremos cuenta que debemos incluir
+    un <link> con  la inclusion de Bootstrap y unos scripts que incluiran JS, tal como lo indica la nota Bootstrap:
+    "Muchos de nuestros componentes requieren el uso de JavaScript para funcionar. Específicamente, requieren jQuery , Popper.js y nuestros propios complementos de JavaScript. Coloque los siguientes <script>mensajes de correo cerca del final de sus páginas, justo antes de la </body>etiqueta de cierre , para habilitarlos. jQuery debe venir primero, luego Popper.js, y luego nuestros complementos de JavaScript."
 12. BLADE
 Blade es una herramienta que implementa laravel para crear plantillas dentro sus aplicaciones.
 Para trabajar con Blade basta con conocer sus directivas.
 Primero se recomienda crear una carpeta dentro de views llamada layouts/
 Alli podemos crear nuestras clases padres de plantillas blade
-Para establecer directivas de clase padre se usa la directiva @yield('nombre') 
-Para que una plantilla pueda ser usada en otra vista se usa la directiva @extends('layouts.nameLayout')
-Para introducir contenido html a la directiva padre se usa la directiva @section('nameLayout')
+    Para establecer directivas de clase padre se usa la directiva @yield('nombre') 
+    Para que una plantilla pueda ser usada en otra vista se usa la directiva @extends('layouts.nameLayout')
+    Para introducir contenido html a la directiva padre se usa la directiva @section('nameLayout')
 Dentro se escribe el html a ser usado
 Se cierra con un @endsection
 Nota: no todas las directivas @section ameritan ser abiertas y cerradas, solo se cierran aquellas que contengan estructura html
 13. HTTP Requests
 Los Requests es el servicio de poder ejecutar en si en CRUD.
 Para nuestro ejemplo vamos a crear el nuevo Trainer. Para ello debemos englobar lo que hemos creado en la vista create dentro de un form.
-Como sigue: <form class="form-group" action="/trainers" method="POST">
+Como sigue: 
+    <form class="form-group" action="/trainers" method="POST">
 La clase es la de Bootstrap, el metodo es POST y el action tal como se ve en la documentacion 
 de laravel es la ruta que ah de seguir nuestra Requests (peticion) que sera manejada en nuestro
 controlador en la funcion store().
-Como sigue:  return $request->input('name'); //Con esto solo vemos el atributo del input que llamamos name
-            //return $request->all();//Esto para visualizar el objeto en si que se esta pasando.
+Como sigue:  
+    return $request->input('name'); //Con esto solo vemos el atributo del input que llamamos name
+    //return $request->all();//Esto para visualizar el objeto en si que se esta pasando.
 14. ORM Object Relational Mapping
 Es una tecnica de programacion para convertir datos utilizando un lenguaje de programacion orientado
 a objetos y la utilizacion de una base de datos relacional como motor de persistencia.
@@ -130,10 +135,11 @@ Los modelos le permiten consultar datos en sus tablas, asi como insertar nuevos 
 15. Modelos y Migraciones
 Como crear un modelo: php artisan make:model Trainer //Eloquent establece que el nombre de los modelos debe ser en singular OJO
 Se puede crear el modelo y de una la migracion; como sigue:
-php artisan make:model Trainer --migration  //con este flag --migration o -m establecemos crear la migracion y el modelo de una vez.
+    php artisan make:model Trainer --migration  //con este flag --migration o -m establecemos crear la migracion y el modelo de una vez.
 El modelo estara en app. Y la migracion estara en database/migrations
 En el archivo de la migracion nosotros podemos a traves de comando establecer que campos tendra
-la tabla de nuestro modelo. En la documentacion: https://laravel.com/docs/6.x/migrations
+la tabla de nuestro modelo. 
+    En la documentacion: https://laravel.com/docs/6.x/migrations
 Podemos encontrar los distintos comandos que podemos usar en nuestra creacion de columnas de nuestro modelo.
 Notemos que el archivo de migracion contiene una class con dos metodos uno es up() y otro down()
 notablemente cada uno de ellos lo que hace es o crear la tabla o eliminarla.
@@ -146,11 +152,11 @@ public function up()
         });
     }
 Nosotros para nuestro caso solo incluiremos el comando para guardar el nombre del trainer:
-$table->string('name');
+    $table->string('name');
 Ahora debemos acomodar el controlador que se encargara de almacenar el nuevo trainer, como sigue:
-$trainer = new Trainer();
-$trainer->name = $request->input('name');
-$trainer->save();
+    $trainer = new Trainer();
+    $trainer->name = $request->input('name');
+    $trainer->save();
 16. MySQL
 Laravel soporta los siguientes gestores de base de datos:
 MySQL 5.6+ 
@@ -165,46 +171,73 @@ Porque? Pues porque es un archivo que esta ignorado por defecto en git y natural
 pues este archivo contiene informacion de credenciales para acceder a la base de datos.
 Por ello si ejecutas el proyecto en otro equipo pues deberas configurar con antelacion el archivo .env antes de hacer cualquier prueba.
 En mi caso actal, uso Wamp para levantar el servidor en mi PC asi que el archivo .env es modificado como sigue:
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=larapok_development
-DB_USERNAME=root
-DB_PASSWORD=
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=larapok_development
+    DB_USERNAME=root
+    DB_PASSWORD=
 Una vez configurado el .env, me tome la molestia de crear manualmente la base de datos "larapok_development"
 con ayuda del gesto de base de datos Workbench.
 Ya una vez que tengo la base de datos creado procedo a la consola a tratar de ejecuar la migracion
-con el comando: php artisan migrate
+    con el comando: php artisan migrate
 Al ejecutar la consola me arroja este error:
- Illuminate\Database\QueryException  : SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was 
+    Illuminate\Database\QueryException  : SQLSTATE[42000]: Syntax error or access violation: 1071 Specified key was 
 too long; max key length is 1000 bytes (SQL: alter table `users` add unique `users_email_unique`(`email`))
 A que se debe esto? Pues a que Laravel agrego el soporte para almacenar emojis dentro de nuestra
 base de datos, lo cual es que si usamos una version vieja de MySQL o de MariaDB.
 Esto lo podemos leer en la documentacion de Laravel:
-https://laravel.com/docs/6.x/migrations#running-migrations
-En la seccion: Index Lengths & MySQL / MariaDB
+    https://laravel.com/docs/6.x/migrations#running-migrations
+    En la seccion: Index Lengths & MySQL / MariaDB
 Nos explican que podemos presentar este tipo de problemas y como solucionarlo.
 Siguiendo el consejo descrito en al documentacion de Laravel pues debes agregar lo que sigue:
-Schema::defaultStringLength(191);
+    Schema::defaultStringLength(191);
 Dentro del AppServiceProvider
 Este archivo se encuentra en app/Providers..
 Escribimos dentro del metodo boot() tal como explica la documentacion y ademas incluir:
-use Illuminate\Support\Facades\Schema; Para poder hacer uso del Schema incluido..
+    use Illuminate\Support\Facades\Schema; Para poder hacer uso del Schema incluido..
 Vamos de nuevo a Workbench. Ejecutamos drop database para eliminar la base de datos y de nuevo:
 create database larapok_development.
 Una vez hecho esto pues sencillamente ejecutamos en la consola:
 php artisan migrate
 Ya una vez que hemos creado correctamente las migraciones a nuestra base de datos podemos ir
-a nuestra ruta: 127.0.0.1:8000/trainers/create 
+    a nuestra ruta: 127.0.0.1:8000/trainers/create 
 Para crear nuestro primer trainer.
 OJO Debemos estar atentos a lo siguiente. Si chequeamos nuestro archivo TrainerController.php
 vemos que deseamos crear un nuevo Trainer() que fue el modelo que creamos con anterioridad, pero
 este modelo no ha sido incluido dentro de nuestro archivo TrainerController.php.
 Para incluirlo debemos indicarselo como sigue:
-use LaraPok\Trainer;
+    use LaraPok\Trainer;
+17.CRUD (Read)
+Ahora vamos a mostrar la informacion almacenada de la manera correcta:
+Para ello lo primero es que dentro de nuestro controlador debemos indicar a donde debe dirigirse para buscar la vista
+Para ellos en el metodo index le indicamos que ahora alli sera para retornar una vista; como sigue:
+    return view('trainers.index');
+Entonces debemos crear la nueva vista en resources/views/trainers
+    index.blade.php
+En nuestro controlador ahora en el metodo index creamos una variable que contenga a los trainers
+que vamos a mostrar y para ellos pues debemos decirle que se traiga a todos los alli registrados 
+y queden almacenados en dicha variable, como se hace posible? Pues asi:
+    $trainers = Trainer::all();
+    return view('trainers.index', compact('trainers'));
+Ademas como vemos en el return debemos pasarle por parametro la funcion compact() a la que se 
+le pasa por parametro la variable almacenadora que estamos usando.
+    Ya en nuestro index.balde.php establecemos el card de como se veran los trainers:
+    <div class="row">
+            <div class="col-sm">
+                <div class="card" style="width: 18rem;">
+                    {{-- <img src="..." class="card-img-top" alt="..."> --}}
+                    <div class="card-body">
+                      <h5 class="card-title">{{$trainer->name}}</h5>
+                      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
 
 
 
 
 
-Quede en el video #14 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #19 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
