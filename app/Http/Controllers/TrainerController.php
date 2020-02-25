@@ -48,6 +48,7 @@ class TrainerController extends Controller
         //return $request; //cap 18 para ve que se esta enviando en el browser
         $trainer = new Trainer();
         $trainer->name = $request->input('name');
+        $trainer->description = $request->input('description');
         $trainer->avatar = $name;
         $trainer->save();
 
