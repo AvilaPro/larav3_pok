@@ -380,9 +380,30 @@ Tambien debemos cambiar el metodo show() de nuestro controlador:
         //return 'tengo que retornar el recurso con el id '.$id;
     }
 Ya no a traves del binding (con el uso del $id) sino a traves del slug.
+22. Custom Implicit Binding
+Como vimos en el capitulo anterior implicit binding lo quitamos porque estaba previamente configurado para abrir con el $id y nos interesaba es conectar a traves del slug.
+Pues podemos customizar (modificar) el implicit binding tal como lo muestra la documentacion:
+    https://laravel.com/docs/6.x/routing#implicit-binding
+Tan solo copiamos lo que nos indica la documentacion y vamos a pegarlo en la ruta de nuestro modelo Trainer.php
+    /**
+     * Get the route key for the model.
+     *
+     * @return string
+     */
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+Volvemos a modificar nuestro show() en el controlador:
+    public function show(Trainer $trainer) //Definido el Implicit Binding en el controlador
+    {
+        return view('trainers.show', compact('trainer'));
+    }
+Ahora lo dejamos simplemente asi.
 
 
 
 
 
-Quede en el video #22 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+Quede en el video #23 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

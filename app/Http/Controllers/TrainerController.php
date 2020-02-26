@@ -63,9 +63,9 @@ class TrainerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($slug) //Definido el Implicit Binding en el controlador
+    public function show(Trainer $trainer) //Definido el Implicit Binding en el controlador
     {
-        $trainer = Trainer::where('slug','=',$slug)->firstOrFail();
+        //$trainer = Trainer::where('slug','=',$slug)->firstOrFail(); //agregado cap 21
         //$trainer = Trainer::find($id);
         //return $trainer;
         return view('trainers.show', compact('trainer'));
