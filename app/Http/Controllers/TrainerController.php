@@ -78,9 +78,9 @@ class TrainerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Trainer $trainer)
     {
-        //
+        return view('trainers.edit', compact('trainer'));
     }
 
     /**
@@ -90,9 +90,21 @@ class TrainerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Trainer $trainer)
     {
-        //
+                            //agregados cap 23
+        //return $trainer; //agregado para ver que si estaba llegando el trainer actualizado
+        //return $request; //con esto verificamos que correctamente este ejecutando el metodo PUT.
+        
+        $trainer->fill($request->except('avatar'));
+        if($request->hasFile('avatar')){ //se verifica que se este pasando un archivo
+            $file =$request->file('avatar');
+            $name = time().$file->getClientOriginalName(); //Se le asigan un nombre unico
+            $trainer->avatar = $name;
+            $file->move(public_path().'/images/',$name); //Se guarda el archivo en nuestra carpeta public.
+        }
+        $trainer->save();
+        return 'actualizado';
     }
 
     /**

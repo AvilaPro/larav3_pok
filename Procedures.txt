@@ -400,10 +400,71 @@ Volvemos a modificar nuestro show() en el controlador:
         return view('trainers.show', compact('trainer'));
     }
 Ahora lo dejamos simplemente asi.
+23. Actualizar Trainer (CRUD Update)
+Bien ahora debemos activar un boton que nos permita editar, actualizar o updatear nuestros trainer.
+Para ello podemos hacerlo en la vista de show, agregando un boton y cambiando la ruta del mismo:
+    <a href="/trainers/{{$trainer->slug}}/edit" class="btn btn-primary">Editar trainer</a>
+Cambiamos en nuestro controlador el metodo edit():
+    public function edit(Trainer $trainer)
+    {
+        return view('trainers.edit', compact('trainer'));
+    }
+Y creamos en resources/views/trainers el archivo:
+    edit.blade.php
+Lo editamos:
+    @extends('layouts.app')
+    @section('title', 'Trainer Edit')
+    @section('content')
+    <form class="form-group" action="/trainers" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="form-group">
+            <label for="">Nombre</label>
+        <input type="text" name="name" class="form-control" value="{{$trainer->name}}">
+        </div>
+
+        <div class="form-group">
+            <label for="">Descripcion</label>
+             <input type="text" name="description" class="form-control" value="{{$trainer->description}}">
+        </div>
+
+        <div class="form-group">
+            <label for="">Avatar Actual</label>
+            <img style="height: 200px; width:200px; backgroud-color: #EFEFEF; margin:20px" src="/images/{{$trainer->avatar}}" alt="" class="card-img-top rounded-circle mx-auto d-block">
+            <label for="">Modificar Avatar:</label>
+            <input type="file" name="avatar">
+        </div>
+ 
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+
+    </form>
+    @endsection
+Ahora Bien, los formularios en html no nos soportan los metodos PUT ni PATCH ni DELETE para hacer la subida de los cambios de edicion, por lo que debemos hacerlo de forma oculta.
+Lo podemos ocultar de una forma bien sencilla con la ayuda de Blade:
+    @method('PUT)
+Tambien debemos cambiar la ruta del action del form como sigue:
+    <form class="form-group" action="/trainers/{{$trainer->slug}}" method="POST" enctype="multipart/form-data">
+Ahora actualizamos nuestro metodo update() de controlador:
+    public function update(Request $request, Trainer $trainer)
+    {
+                            //agregados cap 23
+        //return $trainer; //agregado para ver que si estaba llegando el trainer actualizado
+        //return $request; //con esto verificamos que correctamente este ejecutando el metodo PUT.
+        
+        $trainer->fill($request->except('avatar'));
+        if($request->hasFile('avatar')){ //se verifica que se este pasando un archivo
+            $file =$request->file('avatar');
+            $name = time().$file->getClientOriginalName(); //Se le asigan un nombre unico
+            $trainer->avatar = $name;
+            $file->move(public_path().'/images/',$name); //Se guarda el archivo en nuestra carpeta public.
+        }
+        $trainer->save();
+        return 'actualizado';
+    }
+Y tambien debemos indicarle a nuestro modelo que campos se pueden actualizar, debemos ir a nuestro archivo del modelo Trainer.php
+    protected $fillable = ['name', 'description', 'avatar'];
 
 
 
 
 
-
-Quede en el video #23 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #24 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
