@@ -3,6 +3,9 @@
 @section('title', 'Trainer Create')
 
 @section('content')
+
+    {!!  Form::open(['route' => 'trainers.store', 'method' => 'POST', 'files' => true]) !!}
+    {!! Form::close() !!}
     <form class="form-group" action="/trainers" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="form-group">

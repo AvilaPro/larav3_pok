@@ -462,9 +462,18 @@ Ahora actualizamos nuestro metodo update() de controlador:
     }
 Y tambien debemos indicarle a nuestro modelo que campos se pueden actualizar, debemos ir a nuestro archivo del modelo Trainer.php
     protected $fillable = ['name', 'description', 'avatar'];
+24. Laravel Collective
+Laravel Collective es un complemento que permite generar formularios y etiquetas html con un toque mas profesional al usar laravel.
+Veremos como utilizar Laravel Collective.
+Si vemos tal como vemos en la documentacion:
+    https://laravelcollective.com/docs/6.0/html
+Tal como se puede ver en la documentacion creamos la clave de Laravel Collective:
+    {!!  Form::open(['route' => 'trainers.store', 'method' => 'POST', 'files' => true]) !!}
+Se cierra esta estructura como sigue:
+    {!! Form::close() !!}
 
 
 
 
 
-Quede en el video #24 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #25 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

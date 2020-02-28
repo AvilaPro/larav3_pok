@@ -1,0 +1,18 @@
+1. Debemos ejecutar composer install.
+
+2. Debemos crear una base de datos con el nombre donde se 
+alojaran los datos.
+Recordar modificar el archivo .env el nombre de esta base de datos
+(Si no esta el archivo .env debemos tomar el .env.examples y
+copiar lo que hay alli y usarlo como modelo para crear el .env 
+manualmente
+
+3. Verificar que exista el archivo server.php (que en versiones
+anteriores a 6.X de laravel no se instalaba automaticamente en los
+proyectos y estar pendientes si es necesario luego editarlo.
+
+4. Ejecutar el comando php artisan migrate (con esto se crearan
+las tablas en la base de datos que son necesarias para que la 
+aplicacion funcione en su totalidad y correctamente.
+
+
