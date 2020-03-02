@@ -7,7 +7,11 @@
     {!!  Form::open(['route' => 'trainers.store', 'method' => 'POST', 'files' => true]) !!}
         {{-- Esto para el csrf. --}}
         {!! Form::token() !!} 
-        <div class="form-group">
+
+        @include('trainers.form')
+
+        {{-- Esto fue comentado en el cap 25 para ver sub views --}}
+        {{-- <div class="form-group">
             {!! Form::label('name', 'Nombre') !!}
             {!! Form::text('name', null, ['class' => 'form-control']) !!}
         </div>
@@ -18,7 +22,7 @@
         <div class="form-group">
             {!! Form::label('avatar', 'Avatar') !!}
             {!! Form::file('avatar') !!}
-        </div>
+        </div> --}}
 
         {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
     {!! Form::close() !!}

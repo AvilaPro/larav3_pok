@@ -491,7 +491,31 @@ Dentro de estas sentencias vamos a crear las sentecias que van dentro del form c
     {!! Form::close() !!}
 OJO. Recordar que en nuestra tabla de trainers decidimos agregar un slug. Asi que para que este se agregue al momento de crear al nuevo trainer debemos determnar de que forma se va a agregar a la base de datos. Para ello debemos ir a nuestro controlador en nuestro metodo store y determinar de que forma se va a crear ese slug. Para ejemplo yo agregue lo que sigue:
     $trainer->slug = $TR.$request->input('name');
-
+25. Sub views
+Ahora trabajaremos en pro de eliminar en nuestros trabajos el D.R.Y que no es mas que "Dont Repeat Yourself" que traducido no es mas que "No Te Repitas" y es el cuidado que debemos tener en no repetir codigo en nuestras plantillas o vistas.
+Para empezar vamos a:
+    resorces/views/trainers
+y creamos alli una nueva vista.
+la hemos llamado en nuestro proyecto:
+    form.blade.php
+alli hemos cortado de la vista "create" en esta nueva vista "form" que hemos creado lo siguiente:
+    <div class="form-group">
+        {!! Form::label('name', 'Nombre') !!}
+        {!! Form::text('name', null, ['class' => 'form-control']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('description', 'Description') !!}
+        {!! Form::text('description', null, ['class' => 'form-control']) !!}
+    </div>
+    <div class="form-group">
+        {!! Form::label('avatar', 'Avatar') !!}
+        {!! Form::file('avatar') !!}
+    </div>
+y dentro de la vista "create" hemos incluido la directriz que nos explica en la documentacion de laravel:
+    https://laravel.com/docs/6.x/blade#including-subviews
+La directriz es:
+    @include('trainers.form')
+Haremos lo mismo en la vista "edit"
 
 
 
