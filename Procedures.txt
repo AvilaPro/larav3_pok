@@ -471,6 +471,26 @@ Tal como se puede ver en la documentacion creamos la clave de Laravel Collective
     {!!  Form::open(['route' => 'trainers.store', 'method' => 'POST', 'files' => true]) !!}
 Se cierra esta estructura como sigue:
     {!! Form::close() !!}
+Dentro de estas sentencias vamos a crear las sentecias que van dentro del form como las establece laravel collective.
+    {!!  Form::open(['route' => 'trainers.store', 'method' => 'POST', 'files' => true]) !!}
+        {!! Form::token() !!} //Esto para el csrf.
+        <div class="form-group">
+            {!! Form::label('name', 'Nombre') !!}
+            {!! Form::text('name', null, ['class' => 'form-control']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('description', 'Description') !!}
+            {!! Form::text('description', null, ['class' => 'form-control']) !!}
+        </div>
+        <div class="form-group">
+            {!! Form::label('avatar', 'Avatar') !!}
+            {!! Form::file('avatar') !!}
+        </div>
+
+        {!! Form::submit('Guardar', ['class' => 'btn btn-primary']) !!}
+    {!! Form::close() !!}
+OJO. Recordar que en nuestra tabla de trainers decidimos agregar un slug. Asi que para que este se agregue al momento de crear al nuevo trainer debemos determnar de que forma se va a agregar a la base de datos. Para ello debemos ir a nuestro controlador en nuestro metodo store y determinar de que forma se va a crear ese slug. Para ejemplo yo agregue lo que sigue:
+    $trainer->slug = $TR.$request->input('name');
 
 
 

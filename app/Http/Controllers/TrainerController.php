@@ -39,6 +39,7 @@ class TrainerController extends Controller
      */
     public function store(Request $request)
     {
+        $TR = 'TR-';
         if($request->hasFile('avatar')){ //se verifica que se este pasando un archivo
             $file =$request->file('avatar');
             $name = time().$file->getClientOriginalName(); //Se le asigan un nombre unico
@@ -49,6 +50,7 @@ class TrainerController extends Controller
         $trainer = new Trainer();
         $trainer->name = $request->input('name');
         $trainer->description = $request->input('description');
+        $trainer->slug = $TR.$request->input('name');
         $trainer->avatar = $name;
         $trainer->save();
 
