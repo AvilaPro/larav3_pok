@@ -516,8 +516,31 @@ y dentro de la vista "create" hemos incluido la directriz que nos explica en la 
 La directriz es:
     @include('trainers.form')
 Haremos lo mismo en la vista "edit"
+26. Validaciones
+Vamos a hacer uso de lo indicado en la documentacion de laravel para este caso
+    https://laravel.com/docs/6.x/validation#available-validation-rules
+para ello vamos a nuestra funcion 'store' y alli establecemos como ha de ser la validacion.
+Primero vamos a crear una variable que llamaremos como datos validados ($validateData) y para que ella funcione vamos a asignarle el request con la funcion validate() y validate recibe un  array con las condiciones de cada campo que tendra que validar.
+Asi que en TrainerController en el metodo store() escribiremos como sigue:
+    $validateData = $request->validate([
+        'name' => 'required|max: 10',
+        'description' => 'required|max: 128',
+        'avatar' => 'required|image'
+    ]);
+Cuando las condiciones de nuestras Validaciones no son validas nuestra funcion validate() suele devolvernos a la vista en donde estabamos, y en el caso de que estemos haciendo peticiones AJAX el nos devolveria un Json 
+Ahora para poder mostrarle a nuestros usuarios que no esta validados laravel nos ofrece una variable llamada 'errors' y ella es la que contiene los posibles errores. Ahora solo falta mostrarlas.
+Vamos a nuestra vista 'create'
+     @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+27. FormRequest
 
 
 
-
-Quede en el video #25 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #28 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
