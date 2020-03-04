@@ -540,6 +540,26 @@ Vamos a nuestra vista 'create'
         </div>
     @endif
 27. FormRequest
+Para crear nuestro Requests en la consola escribimos:
+    php artisan make:request StoreTrainerRequest
+Ya en la ruta 
+    app/Http/Controllers/Requests
+alli se creara un archivo nuevo llamado:
+    StoreTrainerRequest.php
+Alli hay dos funciones; authorize() este es un metodo opcional donde nosotros vamos a colocar la logica para autorizacion, pero en este caso la logica se puede manejar de forma externa, asi que le diremos a esta funcion le diremos que retorne 'true'.
+Tambien alli hay otra funcion llamada rules() esta funcion lo que hace es devolvernos un array con las reglas a ser usadas para validar para nuestro caso como sigue:
+    public function rules()
+    {
+        return [
+            'name' => 'required|max: 10',
+            'description' => 'required|max: 128',
+            'avatar' => 'required|image'
+        ];
+    }
+Ahora debemos decirle a nuestro controlador que usaremos dichas validaciones; para ello incluimos en el cabezal del controlador como sigue:
+    use LaraPok\Http\Requests\StoreTrainerRequest;
+Ademas en los parametros de la funcion store() ya no usaremos Requests sino en cambio el que acabamos de crear:
+    public function store(StoreTrainerRequest $request)
 
 
 

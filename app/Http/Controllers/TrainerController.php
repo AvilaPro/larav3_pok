@@ -6,6 +6,8 @@ use LaraPok\Trainer;
 
 use Illuminate\Http\Request;
 
+use LaraPok\Http\Requests\StoreTrainerRequest;
+
 class TrainerController extends Controller
 {
     /**
@@ -37,14 +39,17 @@ class TrainerController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreTrainerRequest $request)
     {
-        $validateData = $request->validate([
+        //Logica para validar los campos
+        //Comentada en el cap 27 para usar StoreTrainerRequest
+       /*  $validatedData = $request->validate([
             'name' => 'required|max: 10',
             'description' => 'required|max: 128',
             'avatar' => 'required|image'
         ]);
-        
+ */
+        //Logica para almacenar al trainer
         $TR = 'TR-';
         if($request->hasFile('avatar')){ //se verifica que se este pasando un archivo
             $file =$request->file('avatar');
