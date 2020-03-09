@@ -4,6 +4,8 @@ namespace LaraPok\Http\Controllers;
 
 use LaraPok\Trainer;
 
+use Illuminate\Support\Facades\Storage;
+
 use Illuminate\Http\Request;
 
 use LaraPok\Http\Requests\StoreTrainerRequest;
@@ -126,8 +128,21 @@ class TrainerController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Trainer $trainer)
     {
-        //
+        $file_path = public_path().'/images/'.$trainer->avatar;
+        
+        if (@getimagesize($file_path)) {
+            unlink($file_path);
+        }
+        else
+        {
+            echo "El archivo que buscas no existe";
+        }
+        
+        $trainer->delete();
+        return 'eliminado exitoso';
+        //return $trainer;
+        //return $file_path;
     }
 }

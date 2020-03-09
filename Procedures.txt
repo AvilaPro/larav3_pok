@@ -560,7 +560,40 @@ Ahora debemos decirle a nuestro controlador que usaremos dichas validaciones; pa
     use LaraPok\Http\Requests\StoreTrainerRequest;
 Ademas en los parametros de la funcion store() ya no usaremos Requests sino en cambio el que acabamos de crear:
     public function store(StoreTrainerRequest $request)
+28. DELETE Eliminar Trainer
+Ahora veremos como eliminar un trainer
+Haremos un cambio a la vista 'show' donde agregaremos un boton para que permita ejecutar dicha accion.
+    {!! Form::open([ 'route' => ['trainers.destroy', $trainer->slug}], 'method' => 'DELETE']) !!}
+        {!! Form::submit('Eliminar', ['class' => 'btn btn-danger']) !!}
+    {!! Form::close() !!}
+Ahora vamos a nuestro controlador y en la funcion destroy() debemos configurar dicha accion.
+    public function destroy(Trainer $trainer)
+    {
+        $file_path = public_path().'/images/'.$trainer->avatar;
+        
+        if (@getimagesize($file_path)) {
+            unlink($file_path);
+        }
+        else
+        {
+            echo "El archivo que buscas no existe";
+        }
+        
+        $trainer->delete();
+        return 'eliminado exitoso';
+        //return $trainer;
+        //return $file_path;
+    }
+Con esta linea de codigo:
+    $file_path = public_path().'/images/'.$trainer->avatar;
+Se obtiene la direccion local de donde esta alojado la imagen del avatar.
+Con la sentencia "if" se verifica que ciertamente la imagen exista y si es asi, se elimina la misma imagen con el comando de php "unlink"
+Luego con la variable $trainer y el metodo delete() eliminamos los datos del trainer ques estan en la base de datos.
+    $trainer->delete();
+29. HTTP Responses (Respuestas HTTP)
 
 
 
-Quede en el video #28 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+
+Quede en el video #30 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
