@@ -621,7 +621,16 @@ Alli agregamos con la ayuda de blade lo siguiente para verificar que la variable
         </div>
     @endif
 Y hacemos lo mismo para el metodo "store" y delete" que retornan ambos a la vista "index", a la cual le incluimos sus istrucciones de blade.
-31.
+31. Refactor
+Para ser mas reusable todo nuestro codigo todas las confirmaciones y mensajes que se generan en nustras vistas las vamos a almacenar en otros archivos y luego con sentencia de blade las incluiremos en las vistas donde las requerimos.
+Para ello creamos una carpeta en "views" llamada "common" y alli podemos crear cada archivo de tipo balde donde vamos a almacenar todas esas sentencias de confirmacion que requeramos.
+Por ejemplo la sentencia de errores en la vista "create" se guardo en un archivo:
+    errors.blade.php
+Y alli se pego dicha sentencia. 
+Luego se incluyo la siguiente sentencia dentro de la vista "create"
+    @include('common.errors')
+Lo mismo se hizo con las notificaciones de success que se estaban mostrando en las otras vistas.
+
 
 
 
