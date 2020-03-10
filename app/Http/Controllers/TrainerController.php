@@ -4,8 +4,6 @@ namespace LaraPok\Http\Controllers;
 
 use LaraPok\Trainer;
 
-use Illuminate\Support\Facades\Storage;
-
 use Illuminate\Http\Request;
 
 use LaraPok\Http\Requests\StoreTrainerRequest;
@@ -67,7 +65,10 @@ class TrainerController extends Controller
         $trainer->avatar = $name;
         $trainer->save();
 
-        return 'Saved'; //Comentario hecho en el cap 18. Para tratar o manipular lo recibido.
+        return redirect()->route('trainers.index');
+
+        //return 'Saved'; //comentario del cap 29 porque aqui devolveriamos una ruta
+        //Comentario hecho en el cap 18. Para tratar o manipular lo recibido.
         //return $request->input('name'); //Con esto solo vemos el atributo del input que llamamos name
         //return $request->all();//Esto para visualizar el objeto en si que se esta pasando.
     }
@@ -119,7 +120,8 @@ class TrainerController extends Controller
             $file->move(public_path().'/images/',$name); //Se guarda el archivo en nuestra carpeta public.
         }
         $trainer->save();
-        return 'actualizado';
+        return redirect()->route('trainers.show', [$trainer]);
+        //return 'actualizado';
     }
 
     /**
@@ -141,7 +143,10 @@ class TrainerController extends Controller
         }
         
         $trainer->delete();
-        return 'eliminado exitoso';
+
+        return redirect()->route('trainers.index');
+        
+        //return 'eliminado exitoso';
         //return $trainer;
         //return $file_path;
     }

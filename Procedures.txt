@@ -591,6 +591,21 @@ Con la sentencia "if" se verifica que ciertamente la imagen exista y si es asi, 
 Luego con la variable $trainer y el metodo delete() eliminamos los datos del trainer ques estan en la base de datos.
     $trainer->delete();
 29. HTTP Responses (Respuestas HTTP)
+Ahora vamos a manejar las respuestas HTTP en laravel.
+Segun la documentacion podemos manejar respuestas como "redirecciones" y tambien podemos responder con:
+     "views" (vistas) 
+     "Json" (archivos Json) 
+     "File Downloads" (descarga de archivos) 
+     "File Responses" (Respuesta de Archivo)
+Bueno, por ejemplo para el momento de crear un nuevo trainer, una vez que lo hayamos creado queremos devolver la vista principal de los trainers, pues para ello usaremos lo siguiente al final del metodo "store":
+    return redirect()->route('trainers.index');
+Donde la sentencia que esta dentro de route es la ruta que dirige a esa vista que podemos verificar en la consola con el comando:
+    php artisan route:list
+Ahora para la devolucion de la vista luego de editar "update", usaremos lo siguiente:
+    return redirect()->route('trainers.show', [$trainer]);
+Es escrita de esta forma, vemos que dentro de "route" escribimos la ruta y ademas como parametro le pasamos un array con las variables que el pueda necesitar para acceder correctamente, recordemos que la vista "show" requiere de un parametro en especifico para poder accesar correctamente al trainer que deseamos.
+
+
 
 
 
