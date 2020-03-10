@@ -3,6 +3,11 @@
 @section('title', 'Trainer')
 
 @section('content')
+    @if(session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
     <img style="height: 200px; width:200px; backgroud-color: #EFEFEF; margin:20px" src="/images/{{$trainer->avatar}}" alt="" class="card-img-top rounded-circle mx-auto d-block">
     <div class="text-center">
         <h5 class="card-title">{{$trainer->name}}</h5>

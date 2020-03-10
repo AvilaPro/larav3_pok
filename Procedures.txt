@@ -604,11 +604,27 @@ Donde la sentencia que esta dentro de route es la ruta que dirige a esa vista qu
 Ahora para la devolucion de la vista luego de editar "update", usaremos lo siguiente:
     return redirect()->route('trainers.show', [$trainer]);
 Es escrita de esta forma, vemos que dentro de "route" escribimos la ruta y ademas como parametro le pasamos un array con las variables que el pueda necesitar para acceder correctamente, recordemos que la vista "show" requiere de un parametro en especifico para poder accesar correctamente al trainer que deseamos.
+30.Session Data
+Para mejorar la UX (User Experience) de nuestra aplicacion vamos a notificarle a nuestro usuario cada vez que el realice una accion podamos informarle correctamente que se esta haciendo lo que el desea.
+Para ello vamos al controlador Trainer y como ejemplo vamos a modificar el metodo "update":
+Con el metodo with():
+    with('status', 'Trainer actualizado')
+y queda como sigue nuestro return
+    return redirect()->route('trainers.show', [$trainer])->with('status', 'Trainer actualizado');
+Ahora vamos a nuestra vista:
+    show.blade.php
+y verificamos que se esta comunicando correctamente la variable session que estamos pasando por parametro al metodo with.
+Alli agregamos con la ayuda de blade lo siguiente para verificar que la variable se esta pasando correctamente:
+    @if(session('status'))
+        <div class="alert alert-success" role="alert">
+            {{ session('status') }}
+        </div>
+    @endif
+Y hacemos lo mismo para el metodo "store" y delete" que retornan ambos a la vista "index", a la cual le incluimos sus istrucciones de blade.
+31.
 
 
 
 
 
-
-
-Quede en el video #30 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #32 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

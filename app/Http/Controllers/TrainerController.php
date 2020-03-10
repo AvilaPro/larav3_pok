@@ -65,7 +65,7 @@ class TrainerController extends Controller
         $trainer->avatar = $name;
         $trainer->save();
 
-        return redirect()->route('trainers.index');
+        return redirect()->route('trainers.index')->with('status','Trainer Creado Corrrectamente');
 
         //return 'Saved'; //comentario del cap 29 porque aqui devolveriamos una ruta
         //Comentario hecho en el cap 18. Para tratar o manipular lo recibido.
@@ -120,7 +120,7 @@ class TrainerController extends Controller
             $file->move(public_path().'/images/',$name); //Se guarda el archivo en nuestra carpeta public.
         }
         $trainer->save();
-        return redirect()->route('trainers.show', [$trainer]);
+        return redirect()->route('trainers.show', [$trainer])->with('status', 'Trainer actualizado');
         //return 'actualizado';
     }
 
@@ -144,8 +144,8 @@ class TrainerController extends Controller
         
         $trainer->delete();
 
-        return redirect()->route('trainers.index');
-        
+        return redirect()->route('trainers.index')->with('status','Trainer Eliminado Corrrectamente');
+
         //return 'eliminado exitoso';
         //return $trainer;
         //return $file_path;
