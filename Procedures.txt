@@ -199,7 +199,7 @@ Escribimos dentro del metodo boot() tal como explica la documentacion y ademas i
 Vamos de nuevo a Workbench. Ejecutamos drop database para eliminar la base de datos y de nuevo:
 create database larapok_development.
 Una vez hecho esto pues sencillamente ejecutamos en la consola:
-php artisan migrate
+    php artisan migrate
 Ya una vez que hemos creado correctamente las migraciones a nuestra base de datos podemos ir
     a nuestra ruta: 127.0.0.1:8000/trainers/create 
 Para crear nuestro primer trainer.
@@ -651,9 +651,55 @@ ESTO NOS VA A ELIMINAR NUESTRA BARRA NAV QUE YA TENIAMOS Y ADEMAS EL LINK QUE TE
 Una vez ejecutados los comandos nos saldra un mensaje como sigue:
     Authentication scaffolding generated successfully.
 Eso quiere decir que ya genero el archivo y todo lo necesario para el login y el register de nuestra autenticacion.
+33 - 34 Roles de Usuario - Models & migrations
+Vamos a crear los roles y para ello en la consola vamos a crear los modelos correspondientes
+    php artisan make:model Role -m
+Con el parametro -m recordamos que creamos de una vez el modelo y la migracion junto con el.
+El nombre del modelo en singular y en ingles es lo mas conveniente.
+Luego vamos a:
+    database/migrations/... el que sea el de los roles recien creado.
+Lo roles estan basados segun sea la necesidad del sitio.
+Aqui se modifico como sigue:
+    public function up()
+    {
+        Schema::create('roles', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('description');
+            $table->timestamps();
+        });
+    }
+En nuestro caso, haremos relaciones "muchos a muchos" para ello necesitaremos una tabla pivote que maneje dichas relaciones, que guardara el id del usuario como el id del rol que desempeña. Para esto generamos esta tabla dinamica:
+    php artisan make:migration create_role_user_table
+Se maneja por convenciion que se ordenenen los nombres de las tablas involucradas por orden alfabetico. Por ello como las tabals involucradas son "role" y "user" se coloco en orden alfabetico al crear su migracion.
+En esta tabla se modifico como sigue:
+    public function up()
+    {
+        Schema::create('role_user', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->integer('user_id')->unsigned();
+            $table-> integer('role_id')->unsigned();
+            $table->timestamps();
+        });
+    }
+Una vez hecho esto podemos ejecutar:
+    php artisan migrate
+Si se presentan errores aqui, como estamos en la etapa de desarrollo podemos eliminar por completo la base de datos y volverla a crear manualmente, esto nos eliminara todos los datos que hasta el momento llevabamos pero no hay de que preocuparse, puesto que estamos en "development state" y no estamos afectand seriamente algo que ya estuviese en produccion. Por ello la planificacion previa de la aplicacion se debe hacer con mucho detalle para no enfrentar errores que no se puedan solucionar facilmente luego.
+Una vez hechas las migraciones debemos relacionar los Modelos. Vamos a 
+    app/User.php
+Alli vamos a describir un metodo que defina la relacion, para ello vamos a definir una funcion como sigue:
+    public function roles(){
+        return $this->belongsToMany('App\Role')
+    }
+Y enseguida hacemos lo mismo en el modelo de Role
+    public function users(){
+        return $this->belongsToMany('App\User')
+    }
+Ya ahora se le pueden dar roles a los usuarios utilizando seeders que es lo que desscribiremos en el siguiente capitulo.
 
 
 
 
 
-Quede en el video #33 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+Quede en el video #35 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
