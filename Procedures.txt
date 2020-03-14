@@ -630,10 +630,30 @@ Y alli se pego dicha sentencia.
 Luego se incluyo la siguiente sentencia dentro de la vista "create"
     @include('common.errors')
 Lo mismo se hizo con las notificaciones de success que se estaban mostrando en las otras vistas.
+32. Autenticacion
+Una caracteristica principal es la Autenticacion.
+Laravel lo implementa tambien dentro del framework.
+Esto tomado de la documentacion:
+    El paquete de Laravel proporciona una forma rápida de andamiaje de todas las rutas y vistas que necesita para la autenticación con unos simples comandos:laravel/ui
+
+    composer require laravel/ui "^1.0" --dev
+
+    php artisan ui vue --auth
+
+    Este comando debe usarse en aplicaciones nuevas e instalará una vista de diseño, vistas de registro e inicio de sesión, así como rutas para todos los puntos finales de autenticación. A HomeControllertambién se generará para manejar las solicitudes posteriores al inicio de sesión en el tablero de su aplicación.
+
+Al ejecutar estos comandos en la consola nos aparecera un mensaje similar a este:
+    The [layouts/app.blade.php] view already exists. Do you wnat to replace it? (yes/no) [no]:
+Esto no es mas que el va a reemplazar el archivo app.blade.php que habiamos creado y lo va a reemplazar por el que va a crear para agregar autenticacion.
+
+ESTO NOS VA A ELIMINAR NUESTRA BARRA NAV QUE YA TENIAMOS Y ADEMAS EL LINK QUE TENIAMOS DE Bootstrap PARA NUESTRAS VISTAS. PERO NO PREOCUPEMOS QUE LUEGO LO SOLUCIONAMOS.
+
+Una vez ejecutados los comandos nos saldra un mensaje como sigue:
+    Authentication scaffolding generated successfully.
+Eso quiere decir que ya genero el archivo y todo lo necesario para el login y el register de nuestra autenticacion.
 
 
 
 
 
-
-Quede en el video #32 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #33 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

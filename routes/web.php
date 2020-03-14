@@ -25,3 +25,7 @@ Route::get('prueba/{name}', 'PruebaController@prueba'); //paso2 cap9
 Route::resource('trainers','TrainerController');
 //Con esta ruta definida sabremos que tenemos acceso a nuestro controlador. //cap 10
 //Como lo sabemos? Pues es lo que esta expuesto en la documentacion de laravel en #Resource Controller
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
