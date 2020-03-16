@@ -764,10 +764,47 @@ Debemos ir a nuestro modelo User.php y el modelo Role.php; y en la function acom
     }
 Ahora vamos a la consola:
     php artisan migrate:refresh --seed
+36. Roles de los Users - Logica de validacion
+Vamos a continuar con la logica para validar cada rol dentro de nuestro usuario.
+Vamos a usar nuestro modelo User, alli vamos a escribir la logica necesaria para validar los roles.
+Dicha funcion para validar que nuestros usuarios tengan asignado un rol.
+    public function hasRole($role){
+        if($this->roles()->where('name',$role->first())){
+            return true;
+        }
+        return false;
+    }
+Esta otra funcion nos permite recorrer los posibles roles que tengan nuestros usuarios. Esta funcion invoca a la funcion creada anteriormente.
+    public function roles(){
+        return $this->belongsToMany('LaraPok\Role');
+    }
+
+    public function hasAnyRole($roles){
+        if(is_array(($roles))){
+            foreach ($roles as $role){
+                if($this->hasRole($role)){
+                    return true;
+                }
+            }
+        }else{
+            if($this->hasRole($roles)){
+                return true;
+            }
+        }
+        return false;
+    }
+Ahora nos hace falta una capa que llame a esta funcion que acabamos de crear y que sea capaz de reaccionar al usuario en caso de que el mismo no este relacionado cn ningun rol.
+Para ello esta en la documentacion de laravel el metodo "abort" que se encargaa de dar una respuesta a nuestro usuario en caso de que este no tenga una relacion con algun rol.
+    https://laravel.com/docs/6.x/helpers#method-abort
+Aqui dejo como es la funcion que debe escribirse para que se verifique la autorizacion del rol del usuario:
+    public function authorizeRoles($roles){
+        if($this->hasAnyRole($roles)){
+            return true;
+        }
+        abort(401, 'This action unauthorized');
+    }
 
 
 
 
-
-
-Quede en el video #36 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #37 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
