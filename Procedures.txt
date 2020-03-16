@@ -696,10 +696,78 @@ Y enseguida hacemos lo mismo en el modelo de Role
         return $this->belongsToMany('App\User')
     }
 Ya ahora se le pueden dar roles a los usuarios utilizando seeders que es lo que desscribiremos en el siguiente capitulo.
+35. Seeders
+Ahora trabajaremos con Seeders. Que es un Seeder? Es basicamente un modulo que nos va a permitir almacenar datos de prueba dentro de la app. Para mas info ir a la documentacion:
+    https://laravel.com/docs/6.x/seeding#introduction
+Vamos a la terminal y creamos nuestros seeder. Uno de ellos para almacenar los roles y otro para almacenar nuestros usuarios.
+    php artisan make:seeder RoleTableSeeder
+y 
+    php artisan make:seeder UserTableSeeder
+Procedemos a crear nuestro seeder de roles, estos seeder estan almacenados en database/seeds
+Alli empezamos a trabajar. Para el seed de Roles empezamos indicandole que vamos a trabajar con el modelo Role. Para ello lo agragamos con al ayuda del "use".
+    use LaraPok\Role;
+Una vez incluido, empezamos a crear el rol.
+En la funcion "run" empezamos a crear el rol. Creamos un rol "admin" y uno "user"
+    public function run()
+    {
+        $role = new Role();
+        $role->name = "admin";
+        $role->description = "Administrador";
+        $role->save();
+
+        $role = new Role();
+        $role->name = "user";
+        $role->description = "User";
+        $role->save();
+    }
+Ahora vamos al rol de user, anexamos los modelos Role y User:
+    use LaraPok\Role;
+    use LaraPok\User;
+Y alli en la funcion "run" preparamos para hacer el rol:
+    //query para obtener la informacion que cumpla con los datos.
+         
+    $role_user = Role::where('name','user')->first();
+    $role_admin = Role::where('name','admin')->first();
+    //Hasta aqui obtenemos los dos roles y ahra solo basta asignarselo a nuestro usuario
+        
+    //Creamos los usuarios.
+    //Les asignamos sus correspondientes atributos.
+    $user = new User();
+    $user->name = "User";
+    $user->email = "user@gmail.com";
+    $user->password = bcrypt('query');
+    $user->save();
+
+    $user->roles()->attach($role_user);
+
+Hasta el momento tenemos roles, uno user y otro admin
+Pero hasta el momento no hemos constituido ninguna relacion entre el rol y el user. Como tenemos una relacion muchos a muchos.
+Con la ayuda de Eloquent (El ORM de Laravel) vamos a establecer las relaciones.
+Ahora podemos decirle a laravel que mediante un user acceda a su metodo roles. Con la ayuda del metodo attach(), se establece la relacion entre User y Role.
+EN este caso como no queremos perder tiempo en hacer el modulo de la creacion de usuarios. Para nuestro caso usaremos los Seeders.
+Ahora solo nos falta configurar nuestra clase "DatabaseSeeder", este sera el encargado de arrancar de manera ordenada cada seeders que tenemos en nuestra app.
+Alli en nuestra metodo "run"
+    public function run()
+    {
+        $this->call(RoleTableSeeder::class);
+        $this->call(UserTableSeeder::class);
+    }
+ANTES DE IR A CONSOLA:
+Debemos ir a nuestro modelo User.php y el modelo Role.php; y en la function acomodar el modelo que estamos usando, que en nuestro caso en LaraPok. Que es el que establecimos como namespace.
+    -----ASI ESTABA ANTES-----
+    public function roles(){
+        return $this->belongsToMany('App\Role')
+    }
+    -----ASI DEBE QUEDAR----
+    public function roles(){
+        return $this->belongsToMany('LaraPok\Role')
+    }
+Ahora vamos a la consola:
+    php artisan migrate:refresh --seed
 
 
 
 
 
 
-Quede en el video #35 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #36 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
