@@ -6,6 +6,8 @@ use LaraPok\Trainer;
 
 use Illuminate\Http\Request;
 
+use Illuminate\Support\Facades\Storage;
+
 use LaraPok\Http\Requests\StoreTrainerRequest;
 
 class TrainerController extends Controller
@@ -15,8 +17,9 @@ class TrainerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $request->user()->authorizeRoles('user');
         $trainers = Trainer::all();
         return view('trainers.index', compact('trainers')); //creado en el cap 17 para asignar la vista que ahora planeamos mostrar.
         

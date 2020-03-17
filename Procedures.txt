@@ -803,8 +803,33 @@ Aqui dejo como es la funcion que debe escribirse para que se verifique la autori
         }
         abort(401, 'This action unauthorized');
     }
+37.Roles de Usuarios - Implementacion
+Ahora vamos a filtrar que solo a un administrador pueda ver los trainers.
+Nos vamos a nuestro controlador de TrainerController, en nuestra funcion index() vamos a acceder al Request. Nuestra funcion index queda asi:
+    public function index(Request $request)
+    {
+        $request->user()->authorizeRoles('admin');
+        $trainers = Trainer::all();
+        return view('trainers.index', compact('trainers')); //creado en el cap 17 para asignar la vista que ahora planeamos mostrar.
+        
+        //return 'Hola desde el controlador Trainers'; //Tuvo su uso en e cap 10 para probar que el controlador funcionaba 
+    }
+Donde con esta linea accedemos al "user" y le indicamos que verifique si tiene algun rol, que fue lo que declaramos en el modelo de User.php
+    $request->user()->authorizeRoles('admin');
+Para probar esto, nos logueamos con en usuario user que creamos cuando establecimos los seeder en el archivo:
+    UserTableSeeder
+Como sabemos el tiene rol de "User" y no de "admin", por lo que al refrescar la pagina de trainers le aparece una ventana de 404 unauthorized.
+Ahora vamos a manejar una vista custom que muestr el mensaje de error de rol.
+Vamos y creamos una vista en database/views y creamos una carpeta nueva llamada "errors", dentro de ella creamos un archivo llamado "401.blade.php" y alli dejamos la siguiente estructura:
+    @extends('layouts.app')
+    @section('content')
+        <div class="container">
+            <h1>This action is unauthorized</h1>
+        </div> 
+    @endsection
+Ya una vez que el rol no es validado dara error "401".
 
 
 
 
-Quede en el video #37 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #38 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

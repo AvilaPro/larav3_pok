@@ -16,7 +16,7 @@ class UserTableSeeder extends Seeder
          
         $role_user = Role::where('name','user')->first();
         $role_admin = Role::where('name','admin')->first();
-        //Hasta aqui obtenemos los dos roles y ahra solo basta asignarselo a nuestro usuario
+        //Hasta aqui obtenemos los dos roles y ahora solo basta asignarselo a nuestro usuario
             
         //Creamos los usuarios.
         //Les asignamos sus correspondientes atributos.
