@@ -828,8 +828,18 @@ Vamos y creamos una vista en database/views y creamos una carpeta nueva llamada 
         </div> 
     @endsection
 Ya una vez que el rol no es validado dara error "401".
+38. Fix
+Vamos a empezar areglando algunas cosas de la vista principal que se vieron afectadas en el capitulo 32 "Autenticacion" en donde al momento de inicializar nuestra logica de autenticacion pues esto genero que se sustituyera el archivo app.blade.php
+En la linea 76 de nuestro archivo corregimos:
+    <main class="container">
+Tambien cuando iniciamos sesion nos manda a la vista "home" vamos a configurarlo para que nos muestre la vista de trainers, en app/http/Auth/Login....  Alli vamos a encontrar una variable protected llamada $redirectTo y encontramos una clase llamada RouteServiceProvider. Vemos que esta inicialmente haciendo mencion de: RouteServiceProvider::HOME y queremos cambiar eso a la vista trianers, pero en la clase RouteServiceProvider no existe aun una constante que haga referencia a dicha vista por ende debemos crearla:
+    public const TRAINERS = '/trainers';
+Una ve hecho esto volvemos a nuestro LoginController y hacemos referencia correctamente:
+    protected $redirectTo = RouteServiceProvider::TRAINERS;
+lo mismo podemos hacer en RegisterController.
 
 
 
 
-Quede en el video #38 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+Quede en el video #39 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

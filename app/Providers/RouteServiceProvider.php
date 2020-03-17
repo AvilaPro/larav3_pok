@@ -23,6 +23,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     public const HOME = '/home';
 
+    public const TRAINERS = '/trainers'; //Agregado en el cap 38 para definir mejor la ruta de sesion y que no se hiciera en al home
+
     /**
      * Define your route model bindings, pattern filters, etc.
      *
