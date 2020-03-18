@@ -837,9 +837,40 @@ Tambien cuando iniciamos sesion nos manda a la vista "home" vamos a configurarlo
 Una ve hecho esto volvemos a nuestro LoginController y hacemos referencia correctamente:
     protected $redirectTo = RouteServiceProvider::TRAINERS;
 lo mismo podemos hacer en RegisterController.
+39. Incorporando vue
+Vue.js es un framework basado en JavaScript que nos ayudara a mejorar la forma en que generamos las vistas en nuestrsa aplicacion. Tambien pudimos implementar React.js pero en este caso sera hecho con Vue.js
+Para implementar Vue en nuestra app podemos revisar que en el archivo package.json se encuentran las dependencias que podemos instalar. Para instalarlos ejecutamos en la consola:
+    npm install
+    Inmediatamente debemos ejecutar:
+    npm run dev
+    (tal como indica la documentacion de laravel: https://laravel.com/docs/6.x/frontend#writing-vue-components)
+Una vez descargados e instalados podemos ya disponer de Vue.js en nuestra app.
+Si chequeamos nuestra la carpeta resources/js encontraremos una carpeta llamada components alli Vue instalo un ejemplo. Y ya en nuestro archivo app.js vemos que se esta implementando:
+    vease: linea 9 y 22.
+En el archivo ExampleComponent.vue podemos ver la estructura fundamental de vue que es:
+    template
+    script   y 
+    styles
+Vamos a nuestra routes/web.php y agregamos:
+    Route::resource('discipulos', 'DiscipuloController');
+Como DiscipuloController no existe lo creamos por consola con ayuda de artisan:
+    php artisan make:controller DiscipuloController
+Al hacer el intento nos da un error, esto es porque en el archivo web.php de routes esta mal invocado la clase Route: (use Illuminate\Routing\Route;) y debe ser indicado de la siguiente forma (en la linea 14 de web.php):
+    use Illuminate\Support\Facades\Route;
+Dentro del controlador recien creado agregamos esto:
+    public function index(){
+        return view('discipulos.index');
+    }
+Ahora vamos a resources/views y creamos una carpeta para los discipulos
+Dentro de esta carpeta vamos a agregar un archivo nuevo "index.blade.php" y alli lo que sigue:
+    @extends('layouts.app')
+    @section('content')
+        <example-component>
+        </example-component>
+    @endsection
+Ahora lo que vamos a hacer es usar el componente de ejemplo de vue para ver como se ve.
 
 
 
 
-
-Quede en el video #39 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #40 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
