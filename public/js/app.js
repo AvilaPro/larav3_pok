@@ -1926,20 +1926,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      discipulos: [{
-        id: 1,
-        name: "Juan"
-      }, {
-        id: 2,
-        name: "Eduardo"
-      }, {
-        id: 1,
-        name: "Cesar"
-      }]
+      discipulos: []
     };
   },
   mounted: function mounted() {
-    console.log('Component mounted');
+    var _this = this;
+
+    axios.get('http://127.0.0.1:8000/discipulos').then(function (response) {
+      return _this.discipulos = response.data;
+    });
   }
 });
 

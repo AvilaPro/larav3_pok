@@ -17,15 +17,12 @@
     export default {
         data(){
             return {
-                discipulos: [
-                    { id: 1, name: "Juan"},
-                    { id: 2, name: "Eduardo"},
-                    { id: 1, name: "Cesar"},
-                ]
+                discipulos: []
+
             }
         },
         mounted() {
-           console.log('Component mounted');
+           axios.get('http://127.0.0.1:8000/discipulos').then(response => (this.discipulos = response.data))
         }
     }
 </script>

@@ -889,9 +889,33 @@ y ademas debemos cambiar el componente requerido en index de "discipulos" por el
         </discipulos-component>
     @endsection
 Al final por el momento nuestro DiscipulosComponent.vue queda tanto el template como el script pereparados para luego indicar como vamos a consumir informacio para luego ir mostrando.
+41. Peticion HTTP con Axios
+Consumo de datos creados en nuestra aplicacion. Para poder hacer uso de nuestro Servicio es en ocasiones necesario contar con alguna libreria que nos permita realizar esta accion. Para ello vue nos sugieer usar Axios, que es un cliente HTTP basado en promesas:
+    https://es.vuejs.org/v2/cookbook/using-axios-to-consume-apis.html
+Vamos a incorporar axios a nuestro componente. DiscipulosComponent
+Para ello vamos a usar mounted para hacer la peticion con axios. Axios ya esta instalado entre las dependencias instaladas que se puede verificar en nuestro package.json
+    mounted() {
+           axios.get('').then(response => (this.discipulos = response.data))
+        }
+Pero como vemos la peticion "get" no tiene a donde ser dirigida, por ello debemos entre los parametros del get decirle a que ruta va a enviar esa informacion. Para ello copiamos la direccion URL donde queremos pasar esa informacion quedando asi:
+    axios.get('http://127.0.0.1:8000/discipulos').then(response => (this.discipulos = response.data))
+Si verificamos nuestra vista hasta aqui vue "renderea" nuestra vista repitiendo un sin fin de "cards" que en realidad no tienen ningun dato en particular. Para solventar esto vamos  a el controlador de DiscipuloController:
+        class DiscipuloController extends Controller
+    {
+        public function index(Request $request){
+            if($request->ajax()){
+                return response()->json([
+                    ['id' => 1, 'name' => 'Juan']
+                ]);
+            }
+            return view('discipulos.index');
+        }
+    }
+Aqui simplemente "hardcodeamos" a un discipulo para que se pueda ver un card basado en ese dato json pero aun no estamos consumiendo de un archivo json en especifico.
+Ahora si vamos a nuestro navegador en "Network" vemos las "Responses" de laravel veremos que nos esta respondiendo con un json.
+Asi ya estamos mostrando informacion desde un "micro" servicio de laravel.
 
 
 
 
-
-Quede en el video #41 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #42 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
