@@ -940,10 +940,43 @@ Luego ingresamos la estiqueta que lleve por nombre segun lo hallamos indicado en
             }
         }
     </script>
+43. Store Laravel
+Vamos a continuar con la creacion del discipulo. Una primera parte para poder crear un discipulos dentro del backend y luego crear las vistas para mostrar todo.
+En la aplicacion aun no contamos con un modelo para discipulos.
+En la terminal Ejecutamos para crear un modelo:
+    php artisan make:model Discipulo -m
+En el archivo recien creado ubicado eb database/migrations
+    public function up()
+    {
+        Schema::create('discipulos', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('name');
+            $table->string('clase');
+            $table->string('picture');
+            $table->timestamps();
+        });
+    }
+Ahora en la consola:
+    php artisan migrate
+Ahora trabajamos con el controlador de discipulo. Ahora nos vamos a enfocar en el metodo de almacenamiento. Creamos la siguiente funcion.
+    public function store(Request $request){
+        if($request->ajax()){
+            $discipulo = new Discipulo();
+            $discipulo->name = $request->input('name');
+            $discipulo->clase = $request->input('clase');
+            $discipulo->picture = $request->input('picture');
+            $discipulo->save();
+
+            return response()->json([
+                "message" => "Discipulo Creado Correctamente"
+            ], 200);
+        }
+    }
 
 
 
 
 
 
-Quede en el video #43 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+Quede en el video #44 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
