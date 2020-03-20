@@ -11,6 +11,8 @@ manualmente
 anteriores a 6.X de laravel no se instalaba automaticamente en los
 proyectos y estar pendientes si es necesario luego editarlo.
 
+Si este no existe, lo mejor es copiarlo de otro proyecto ya existente y agregarlo a la raiz de nuestro proyecto.
+
 4. Ejecutar el comando php artisan migrate (con esto se crearan
 las tablas en la base de datos que son necesarias para que la 
 aplicacion funcione en su totalidad y correctamente.
