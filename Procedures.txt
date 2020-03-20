@@ -869,8 +869,29 @@ Dentro de esta carpeta vamos a agregar un archivo nuevo "index.blade.php" y alli
         </example-component>
     @endsection
 Ahora lo que vamos a hacer es usar el componente de ejemplo de vue para ver como se ve.
+40. Listando recursos con Vue.js
+Ahora vamos a crear un nuevo componente de vue para listar a los discipulos.
+En resources/js/components creamos nuestro nuevo componente:
+    DiscipulosComponent.vue
+Alli (estoy trabajando con VSCode) con la ayuda de la extension "Vue VSCode Snippets" usamos vbase para generar la plantilla sencilla de vue.
+Entre las etiquetas de "template" vamos a pegar la estructura que teniamos en trai/index.php
+Dentro de "script" basta con colocar la sentencia export default y con ayuda de mounted() veremos en la consola cuando el componente este montado.
+Ahora bien para agilizar nuestra ejecucuion de Vue.js en nuestro proyecto vamos a ejecutar en la consola 
+    npm run watch
+Y esto no es mas que ir compilando los archivos de Vue a medida que los vamos actualizando.
+Debemos registrar nuestro componente en el archivo app.js que se encuentra en resorces/js
+    Vue.component('discipulos-component', require('./components/DiscipulosComponent.vue').default);
+y ademas debemos cambiar el componente requerido en index de "discipulos" por el de discipulos-component.
+    @extends('layouts.app')
+    @section('content')
+        <discipulos-component>
+            
+        </discipulos-component>
+    @endsection
+Al final por el momento nuestro DiscipulosComponent.vue queda tanto el template como el script pereparados para luego indicar como vamos a consumir informacio para luego ir mostrando.
 
 
 
 
-Quede en el video #40 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+Quede en el video #41 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

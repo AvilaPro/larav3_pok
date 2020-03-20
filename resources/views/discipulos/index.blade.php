@@ -1,6 +1,6 @@
 @extends('layouts.app')
     @section('content')
-        <example-component> 
+        <discipulos-component>
             
-        </example-component>
+        </discipulos-component>
     @endsection
