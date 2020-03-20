@@ -1,5 +1,6 @@
 <template>
     <div class="row">
+        <spinner v-show="loading">  </spinner>
         <div class="col-sm" v-for="discipulo in discipulos" >
             <div class="card text-center" style="width: 18rem; margin-top: 70px">
                 <img style="height: 150px; width:150px; backgroud-color: #EFEFEF; margin:20px" src="images/" alt="" class="card-img-top rounded-circle mx-auto d-block">
@@ -17,12 +18,17 @@
     export default {
         data(){
             return {
-                discipulos: []
-
+                discipulos: [],
+                loading: true,
             }
         },
         mounted() {
-           axios.get('http://127.0.0.1:8000/discipulos').then(response => (this.discipulos = response.data))
+           axios
+                .get('http://127.0.0.1:8000/discipulos')
+                .then((res) => {
+                    this.discipulos = res.data
+                    this.loading = false
+                })
         }
     }
 </script>

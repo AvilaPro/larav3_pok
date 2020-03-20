@@ -914,8 +914,36 @@ Si verificamos nuestra vista hasta aqui vue "renderea" nuestra vista repitiendo 
 Aqui simplemente "hardcodeamos" a un discipulo para que se pueda ver un card basado en ese dato json pero aun no estamos consumiendo de un archivo json en especifico.
 Ahora si vamos a nuestro navegador en "Network" vemos las "Responses" de laravel veremos que nos esta respondiendo con un json.
 Asi ya estamos mostrando informacion desde un "micro" servicio de laravel.
+42.CSS Spinner
+Normalmente cuando realizamos una aplicacion como esta que debe alimentarse de un servicio puede tardar un poco en mostrar la informacion, por ello hay que tener disponible una forma de mostrar al usuario que se esta esperando la informacion para que esta una vez este completamente disponible mostrarla al usuario.
+Ahora vamos a implementar spinner en nuestra aplicacion, en el siguente enlace se pueden ver varios modelos de spinner que se pueden implementar:
+    https://projects.lukehaas.me/css-loaders/
+Ahora creamos un nuevo componente para el spinner. En resources/components.
+Alli pegamos las estructuras para el spinner en nuestro component y luego lo registramos en la aplicacion en nuestro app.js
+    Vue.component('spinner', require('./components/Spinner.vue').default);
+Luego ingresamos la estiqueta que lleve por nombre segun lo hallamos indicado en nuestro app.js, en este caso la etiqueta sera <spinner>, y luego acomodamos el script:
+    <script>
+        export default {
+            data(){
+                return {
+                    discipulos: [],
+                    loading: true,
+                }
+            },
+            mounted() {
+            axios
+                    .get('http://127.0.0.1:8000/discipulos')
+                    .then((res) => {
+                        this.discipulos = res.data
+                        this.loading = false
+                    })
+            }
+        }
+    </script>
 
 
 
 
-Quede en el video #42 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+
+Quede en el video #43 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
