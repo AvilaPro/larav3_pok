@@ -1963,7 +1963,32 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      name: null,
+      clase: null,
+      picture: null
+    };
+  },
+  methods: {
+    saveDiscipulo: function saveDiscipulo() {
+      axios.post('http://127.0.0.1:8000/discipulos', {
+        name: this.name,
+        clase: this.clase,
+        picture: this.picture
+      }).then(function (res) {
+        console.log(res);
+        $('#addDiscipulo').modal('hide');
+      })["catch"](function (err) {
+        console.log(err);
+      });
+      /* console.log(this.name)
+      console.log(this.clase)
+      console.log(this.picture) */
+    }
+  }
+});
 
 /***/ }),
 
@@ -38162,106 +38187,154 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "div",
+    {
+      staticClass: "modal fade",
+      attrs: { id: "addDiscipulo", role: "dialog", "aria-hidden": "true" }
+    },
+    [
+      _c("div", { staticClass: "modal-dialog", attrs: { role: "document" } }, [
+        _c("div", { staticClass: "modal-content" }, [
+          _vm._m(0),
+          _vm._v(" "),
+          _c("div", { staticClass: "modal-body" }, [
+            _c(
+              "form",
+              {
+                on: {
+                  submit: function($event) {
+                    $event.preventDefault()
+                    return _vm.saveDiscipulo($event)
+                  }
+                }
+              },
+              [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Discipulo")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.name,
+                        expression: "name"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Ingresa el nombre del Discipulo"
+                    },
+                    domProps: { value: _vm.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.name = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Clase del Discipulo")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.clase,
+                        expression: "clase"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Ingresa la clase a la que pertenece"
+                    },
+                    domProps: { value: _vm.clase },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.clase = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", [_vm._v("Picture")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.picture,
+                        expression: "picture"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: {
+                      type: "text",
+                      placeholder: "Ingresa la url de una imagen"
+                    },
+                    domProps: { value: _vm.picture },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.picture = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  { staticClass: "btn btn-primary", attrs: { type: "submit" } },
+                  [_vm._v("Guardar")]
+                )
+              ]
+            )
+          ])
+        ])
+      ])
+    ]
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "modal fade",
-        attrs: { id: "addDiscipulo", role: "dialog", "aria-hidden": "true" }
-      },
-      [
-        _c(
-          "div",
-          { staticClass: "modal-dialog", attrs: { role: "document" } },
-          [
-            _c("div", { staticClass: "modal-content" }, [
-              _c("div", { staticClass: "modal-header" }, [
-                _c(
-                  "h5",
-                  {
-                    staticClass: "modal-title",
-                    attrs: { id: "exampleModalLabel" }
-                  },
-                  [_vm._v("Agregar Discipulo")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "button",
-                  {
-                    staticClass: "close",
-                    attrs: {
-                      type: "button",
-                      "data-dismiss": "modal",
-                      "aria-label": "Close"
-                    }
-                  },
-                  [
-                    _c("span", { attrs: { "aria-hidden": "true" } }, [
-                      _vm._v("×")
-                    ])
-                  ]
-                )
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "modal-body" }, [
-                _c("form", [
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Discipulo")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        placeholder: "Ingresa el nombre del Discipulo"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Clase del Discipulo")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        placeholder: "Ingresa la clase a la que pertenece"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group" }, [
-                    _c("label", [_vm._v("Picture")]),
-                    _vm._v(" "),
-                    _c("input", {
-                      staticClass: "form-control",
-                      attrs: {
-                        type: "text",
-                        placeholder: "Ingresa la url de una imagen"
-                      }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-primary",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Guardar")]
-                  )
-                ])
-              ])
-            ])
-          ]
-        )
-      ]
-    )
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Agregar Discipulo")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close"
+          }
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      )
+    ])
   }
 ]
 render._withStripped = true
@@ -38301,7 +38374,7 @@ var render = function() {
       }),
       _vm._v(" "),
       _vm._l(_vm.discipulos, function(discipulo) {
-        return _c("div", { staticClass: "col-sm" }, [
+        return _c("div", { key: discipulo.id, staticClass: "col-sm" }, [
           _c(
             "div",
             {
@@ -38317,7 +38390,7 @@ var render = function() {
                   "backgroud-color": "#EFEFEF",
                   margin: "20px"
                 },
-                attrs: { src: "images/", alt: "" }
+                attrs: { alt: "", src: discipulo.picture }
               }),
               _vm._v(" "),
               _c("div", { staticClass: "card-body" }, [
@@ -38326,9 +38399,7 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _c("p", { staticClass: "card-text" }, [
-                  _vm._v(
-                    "Lorem ipsum dolor sit amet consectetur adipisicing elit. "
-                  )
+                  _vm._v(_vm._s(discipulo.clase))
                 ]),
                 _vm._v(" "),
                 _c(

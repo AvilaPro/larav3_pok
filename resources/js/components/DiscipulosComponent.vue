@@ -1,12 +1,12 @@
 <template>
     <div class="row">
         <spinner v-show="loading">  </spinner>
-        <div class="col-sm" v-for="discipulo in discipulos" >
+        <div class="col-sm" v-for="discipulo in discipulos" v-bind:key="discipulo.id">
             <div class="card text-center" style="width: 18rem; margin-top: 70px">
-                <img style="height: 150px; width:150px; backgroud-color: #EFEFEF; margin:20px" src="images/" alt="" class="card-img-top rounded-circle mx-auto d-block">
+                <img style="height: 150px; width:150px; backgroud-color: #EFEFEF; margin:20px" alt="" class="card-img-top rounded-circle mx-auto d-block" v-bind:src="discipulo.picture" >
                 <div class="card-body">
                   <h5 class="card-title">{{ discipulo.name }}</h5>
-                  <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. </p>
+                  <p class="card-text">{{ discipulo.clase }}</p>
                 <a href="/trainers/" class="btn btn-primary">Conocer Mas</a>
                 </div>
             </div>

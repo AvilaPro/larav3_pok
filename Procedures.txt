@@ -1027,11 +1027,66 @@ Ahora debemos resgitrar este nuevo componente en el archivo app.js
     Vue.component('create-form-discipulo', require('./components/CreateDiscipuloComponent.vue').default);
 Y lo embedbemos en nuestro archivo index de discipulo:
     <create-form-discipulo></create-form-discipulo>
+45. Creando Discipulo con Vue
+Por ahora Vue aun no hace el trabajo de Binding de la informacion del discipulo. Para ello dentro de los input de captura de datos vamos a ingresar la siguiente clave de vue:
+    v-model="nombre"
+En la etiqueta general del form debemos detener el submit para poder manipularlo.
+    <form @submit.prevent="saveDiscipulo">
+Ahora en el script:
+    <script>
+        export default {
+            data(){
+                return {
+                    name: null,
+                    clase: null,
+                    picture: null
+                }
+            },
+            methods: {
+                saveDiscipulo: function(){
+                    axios.post('http://127.0.0.1:8000/discipulos', {
+                        name: this.name,
+                        clase: this.clase,
+                        picture: this.picture
+                    })
+                    .then(function(res){
+                        console.log(res)
+                        $('addDiscipulo').modal('hide')
+                    })
+                    .catch(function(err){
+                        console.log(err)
+                    })
+                    /* console.log(this.name)
+                    console.log(this.clase)
+                    console.log(this.picture) */
+                }
+            }
+        }
+    </script>
+Debemos tener en cuenta que el URL una vez este en produccion esta debe cambiar, a la que hacemos referencia es:
+    axios.post('http://127.0.0.1:8000/discipulos'
+Notemos que:
+    .then(function(res){
+        console.log(res)
+        $('addDiscipulo').modal('hide')
+    })
+Aqui manejamos la respuesta "res" response y ademas vamos a ocultar el modal de agregar discipulo.
+En esta otra capturamos cualquier error y luego lo podemos manipular segun requeriramos:
+    .catch(function(err){
+        console.log(err)
+    })
+Ya con esto es suficiente para enviar toda la informacion al backend.
+Muy importante antes de continuar debemos ir a nuestro DiscipuloController y hacer uso de la clase "Discipulo" porque sino dara error al tratar de registrar.
+    use LaraPok\Discipulo;
+Luego en ese mismo controlador debemos borrar la data que "harcodeamos" en capitulos anteriores y hacer esta vez el llamado correcto
+Dentro del index creamos una consulta con Eloquent con el metodo all() nos traemos todos los discipulos almacenados.
+    $discipulos = Discipulo::all();
+    return response()->json($discipulos, 200);
+Ahora en el componente de discipulos tenemos que hacer que se vea la imagen del Discipulo:
+    v-bind:src="discipulo.picture" (debe borrarse el atributo src existente y sustituir por este)
+Ademas se reacomodo la etiqueta div que contenia al v-for ya que una sugerencia de las extensiones de VSCode sugeria agregar un v-bind:key que no esta mal segun la informacion en la documentacion de Vue (https://es.vuejs.org/v2/guide/list.html):
+    <div class="col-sm" v-for="discipulo in discipulos" v-bind:key="discipulo.id">
 
 
 
-
-
-
-
-Quede en el video #45 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #46 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
