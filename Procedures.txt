@@ -972,6 +972,61 @@ Ahora trabajamos con el controlador de discipulo. Ahora nos vamos a enfocar en e
             ], 200);
         }
     }
+44. Discipulo component
+Creamos un nuevo componente para crear un boton para crear un nuevo discipulo. En resources/js/components.
+    AddDiscipuloComponent.vue
+Agregamos este componente en nuestro archivo app.js
+    Vue.component('add-discipulo-btn', require('./components/AddDiscipuloComponent.vue').default);
+Y ahora lo embedbemos en nuestra vista index de discipulo:
+    <add-discipulo-btn></add-discipulo-btn>
+Ahora, actualmente el boton hace referencia a una modal llamado #addDiscipulo ahora vamos a crear el componente que ejecute esa creacion.
+    CreateDiscipuloComponent.vue
+Y alli dentro dejamos esto:
+    <template>
+    <div class="modal fade" id="addDiscipulo" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Discipulo</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <form>
+                <div class="form-group">
+                    <label>Discipulo</label>
+                    <input type="text" class="form-control" placeholder="Ingresa el nombre del Discipulo">
+                </div>
+                <div class="form-group">
+                    <label>Clase del Discipulo</label>
+                    <input type="text" class="form-control" placeholder="Ingresa la clase a la que pertenece">
+                </div>
+                <div class="form-group">
+                    <label>Picture</label>
+                    <input type="text" class="form-control" placeholder="Ingresa la url de una imagen" >
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
+    </template>
+
+    <script>
+        export default {
+            
+        }
+    </script>
+
+    <style scoped>
+
+    </style>
+Ahora debemos resgitrar este nuevo componente en el archivo app.js
+    Vue.component('create-form-discipulo', require('./components/CreateDiscipuloComponent.vue').default);
+Y lo embedbemos en nuestro archivo index de discipulo:
+    <create-form-discipulo></create-form-discipulo>
 
 
 
@@ -979,4 +1034,4 @@ Ahora trabajamos con el controlador de discipulo. Ahora nos vamos a enfocar en e
 
 
 
-Quede en el video #44 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #45 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

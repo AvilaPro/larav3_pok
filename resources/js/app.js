@@ -25,6 +25,10 @@ Vue.component('discipulos-component', require('./components/DiscipulosComponent.
 
 Vue.component('spinner', require('./components/Spinner.vue').default);
 
+Vue.component('add-discipulo-btn', require('./components/AddDiscipuloComponent.vue').default);
+
+Vue.component('create-form-discipulo', require('./components/CreateDiscipuloComponent.vue').default);
+
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
