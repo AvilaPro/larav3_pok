@@ -1118,9 +1118,11 @@ Si vemos un div llamado modal-backdrop no se ocultaba una vez enviado el formula
     $('.modal-backdrop').remove()
 47. Porque Vue?
 Laravel nos provee de un par de dependencias con Bootstrap y Vue porque son muy usados en el regular de programacion de aplicaciones. Si vemos la documentacion de laravel vemos una intencion de laravel de poder hacer las aplicaciones mas reactivas, por ello incluyen a Vue como sugenerador reactivo y esto hace la aplicacion mas robusta. Es muy claro que las aplicaciones modernas desean que se desea que sea muy reactivo. Sin embargo laravel nos ofrece la posibilidad de remover el scaffolding de JavaScript. Y tambien si lo que queremos es usar React pues tambien podemos hacerlo sin problemas.
+48. Refactor en componentes
+Hemos ido creando componentes de forma desordenada simplemente para ver que estaban funcionales. Por ello vamos a organizarlos.
+En resources/components creamos una carpeta adecuada para cada tipo de archivo que voy a estar tratando. Cree una carpeta 'discipulos' y otra carpeta 'widgets' 
 
 
 
 
-
-Quede en el video #48 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #49 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

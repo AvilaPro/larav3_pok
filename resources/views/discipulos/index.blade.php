@@ -1,6 +1,6 @@
 @extends('layouts.app')
     @section('content')
-        <add-discipulo-btn></add-discipulo-btn>
+        <modal-button></modal-button>
         <create-form-discipulo></create-form-discipulo>
-        <discipulos-component></discipulos-component>
+        <list-of-discipulos></list-of-discipulos>
     @endsection
