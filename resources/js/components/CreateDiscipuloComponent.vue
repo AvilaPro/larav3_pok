@@ -31,6 +31,8 @@
 </template>
 
 <script>
+  import EventBus from '../event-bus';
+
     export default {
         data(){
             return {
@@ -47,8 +49,10 @@
                     picture: this.picture
                 })
                 .then(function(res){
-                    console.log(res)
+                    //console.log(res)
                     $('#addDiscipulo').modal('hide')
+                    $('.modal-backdrop').remove()
+                    EventBus.$emit('discipulo-added', res.data.discipulo)
                 })
                 .catch(function(err){
                     console.log(err)

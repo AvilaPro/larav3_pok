@@ -1,7 +1,7 @@
 <template>
     <div class="row">
         <spinner v-show="loading">  </spinner>
-        <div class="col-sm" v-for="discipulo in discipulos" v-bind:key="discipulo.id">
+        <div class="col-sm" v-for="discipulo in discipulos" >
             <div class="card text-center" style="width: 18rem; margin-top: 70px">
                 <img style="height: 150px; width:150px; backgroud-color: #EFEFEF; margin:20px" alt="" class="card-img-top rounded-circle mx-auto d-block" v-bind:src="discipulo.picture" >
                 <div class="card-body">
@@ -15,12 +15,19 @@
 </template>
 
 <script>
+    import EventBus from '../event-bus';
+
     export default {
         data(){
             return {
                 discipulos: [],
                 loading: true,
             }
+        },
+        created(){
+            EventBus.$on('discipulo-added', data => {
+                this.discipulos.push(data)                
+            })
         },
         mounted() {
            axios

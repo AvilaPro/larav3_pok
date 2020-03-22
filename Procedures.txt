@@ -1086,7 +1086,40 @@ Ahora en el componente de discipulos tenemos que hacer que se vea la imagen del 
     v-bind:src="discipulo.picture" (debe borrarse el atributo src existente y sustituir por este)
 Ademas se reacomodo la etiqueta div que contenia al v-for ya que una sugerencia de las extensiones de VSCode sugeria agregar un v-bind:key que no esta mal segun la informacion en la documentacion de Vue (https://es.vuejs.org/v2/guide/list.html):
     <div class="col-sm" v-for="discipulo in discipulos" v-bind:key="discipulo.id">
+46. EventBus con Vue
+Aqui vamos a tratar de corregir el hecho de que una vez agregado el discipulo la vista de los discipulos reaccione y nos lo muestre de una vez.
+En nuestro controlador de discipulo, en la seccion donde almacenamos "store" algo que necesita nuestro cliente que en este caso es Vue es la informacion de ese nuevo discipulo que se esta agregando:
+    return response()->json([
+        "message" => "Discipulo Creado Correctamente",
+        "discipulo" => $discipulo
+    ], 200);
+Queda asi. Ahora en el component de CreateDiscipuloComponent una vez creamos a un discipulo necesitamos usar EventBus que no es mas que decirle a un componente que escuche los eventos que sucedieron en otro componente, en nuestro caso queremos que CreateDiscipuloComponent le diga a DiscipulosComponent que se ha agregado un nuevo discipulo y por ende actualice la lista de discipulos.
+El EventBus debo generarlo desde Vue y por ello debo crear un nuevo archivo en la carpeta raiz resources/js llamado event-bus.js
+    window.Vue = require('vue');
+    const bus = new Vue();
+
+    export default bus
+Incorporo a vue con window.Vue creamos una constante llamada bus que es un nuevo Vue y por ultimo lo exportamos por defecto.
+Ahora en el CreateDiscipuloComponent lo primero en el script importamos el EventBus para usarlo
+    import EventBus from '../event-bus';
+Y ya lo podemos usar indicando que deseamos emitir dicho evento
+    .then(function(res){
+        console.log(res)
+        $('#addDiscipulo').modal('hide')
+        EventBus.$emit('discipulo-added', res.data.discipulo)
+    })
+Ahora en nuestro DiscipulosComponent debemos recibir dicho evento emitido, ahora vamos a trabajar con otro "livecycle" de vue llamado created():
+    created(){
+        EventBus.$on('discipulo-added', data => {
+            this.discipulos.push(data)                
+        })
+    },
+Si vemos un div llamado modal-backdrop no se ocultaba una vez enviado el formulario de registro de un discipulo, para forzarlo desde el CreateDiscipuloComponent forzamos el cierre de dicha clase en el .then con la siguiente instruccion:
+    $('.modal-backdrop').remove()
 
 
 
-Quede en el video #46 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+
+
+
+Quede en el video #47 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

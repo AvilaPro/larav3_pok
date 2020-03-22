@@ -29,7 +29,8 @@ class DiscipuloController extends Controller
             $discipulo->save();
 
             return response()->json([
-                "message" => "Discipulo Creado Correctamente"
+                "message" => "Discipulo Creado Correctamente",
+                "discipulo" => $discipulo
             ], 200);
         }
     }
