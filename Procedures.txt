@@ -1116,10 +1116,11 @@ Ahora en nuestro DiscipulosComponent debemos recibir dicho evento emitido, ahora
     },
 Si vemos un div llamado modal-backdrop no se ocultaba una vez enviado el formulario de registro de un discipulo, para forzarlo desde el CreateDiscipuloComponent forzamos el cierre de dicha clase en el .then con la siguiente instruccion:
     $('.modal-backdrop').remove()
+47. Porque Vue?
+Laravel nos provee de un par de dependencias con Bootstrap y Vue porque son muy usados en el regular de programacion de aplicaciones. Si vemos la documentacion de laravel vemos una intencion de laravel de poder hacer las aplicaciones mas reactivas, por ello incluyen a Vue como sugenerador reactivo y esto hace la aplicacion mas robusta. Es muy claro que las aplicaciones modernas desean que se desea que sea muy reactivo. Sin embargo laravel nos ofrece la posibilidad de remover el scaffolding de JavaScript. Y tambien si lo que queremos es usar React pues tambien podemos hacerlo sin problemas.
 
 
 
 
 
-
-Quede en el video #47 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #48 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
