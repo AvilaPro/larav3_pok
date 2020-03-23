@@ -12,6 +12,8 @@
 */
 
 use Illuminate\Support\Facades\Route;
+use LaraPok\Discipulo;
+use LaraPok\Http\Controllers\DiscipuloController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,7 +30,8 @@ Route::resource('trainers','TrainerController');
 //Con esta ruta definida sabremos que tenemos acceso a nuestro controlador. //cap 10
 //Como lo sabemos? Pues es lo que esta expuesto en la documentacion de laravel en #Resource Controller
 
-Route::resource('discipulos', 'DiscipuloController');
+//Route::resource('discipulos', 'DiscipuloController'); Comentado en cap 50 porque ahora se va a agregar el discipulo asociandolo a un trainer.
+Route::post('trainers/{trainer}/discipulos', 'DiscipuloController@store');
 
 Auth::routes();
 

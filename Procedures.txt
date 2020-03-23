@@ -1159,8 +1159,60 @@ Ahora dentro de nuestra clase Discipulo copiamos la public function post que apa
     {
         return $this->belongsTo('LaraPok\Trainer');
     }
+50. Asociando Modelos.
+Primero vamos a agregar el boton para agregar discipulo al trainer y segundo vamos a agregar la modal que permite agregarlo. Segundo debemos cambiar la logica de agregar discipulo puesto que debemos asociar los discipulos a cada trainer.
+En la vista show de trainer agregamos los componentes de vue, el boton y el modal:
+    <modal-button></modal-button>
+    <create-form-discipulo></create-form-discipulo>
+Y vamos a modificar la Route en routes/web.php
+    Route::post('trainers/{trainer}/discipulos', 'DiscipuloController.store')
+Ahora en el componente "add" donde se maneja el almacenaje de dicho discipulo vamos a cambiar la logica de almacenaje:
+    methods: {
+            saveDiscipulo: function(){
+              let currentRoute = window.location.pathname;
+              //console.log(currentRoute); Usado en el cap 50 para ver que se guarda correctamente la ruta actual
+
+              axios.post(`http://127.0.0.1:8000${currentRoute}/discipulos`, {
+                  name: this.name,
+                  clase: this.clase,
+                  picture: this.picture
+              })
+              .then(function(res){
+                  console.log(res)
+                  $('#addDiscipulo').modal('hide')
+                  $('.modal-backdrop').remove()
+                  EventBus.$emit('discipulo-added', res.data.discipulo)
+              })
+              .catch(function(err){
+                  console.log(err)
+              })
+
+              /* console.log(this.name)
+              console.log(this.clase)
+              console.log(this.picture) */
+            }
+        }
+Ahora en DiscipuloController:
+    use LaraPok\Trainer;
+
+    public function store(Trainer $trainer, Request $request){
+        if($request->ajax()){
+            $discipulo = new Discipulo();
+            $discipulo->name = $request->input('name');
+            $discipulo->clase = $request->input('clase');
+            $discipulo->picture = $request->input('picture');
+            $discipulo->trainer()->associate($trainer)->save();
+            //$discipulo->save();
+
+            return response()->json([
+                "trainer" => $trainer,
+                "message" => "Discipulo Creado Correctamente",
+                //"discipulo" => $discipulo
+            ], 200);
+        }
+    }
 
 
 
 
-Quede en el video #50 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #51 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

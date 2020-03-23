@@ -1952,12 +1952,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     saveDiscipulo: function saveDiscipulo() {
-      axios.post('http://127.0.0.1:8000/discipulos', {
+      var currentRoute = window.location.pathname; //console.log(currentRoute); Usado en el cap 50 para ver que se guarda correctamente la ruta actual
+
+      axios.post("http://127.0.0.1:8000".concat(currentRoute, "/discipulos"), {
         name: this.name,
         clase: this.clase,
         picture: this.picture
       }).then(function (res) {
-        //console.log(res)
+        console.log(res);
         $('#addDiscipulo').modal('hide');
         $('.modal-backdrop').remove();
         _event_bus__WEBPACK_IMPORTED_MODULE_0__["default"].$emit('discipulo-added', res.data.discipulo);

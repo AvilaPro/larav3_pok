@@ -4,6 +4,7 @@ namespace LaraPok\Http\Controllers;
 
 use Illuminate\Http\Request;
 use LaraPok\Discipulo;
+use LaraPok\Trainer;
 
 class DiscipuloController extends Controller
 {
@@ -20,17 +21,19 @@ class DiscipuloController extends Controller
         return view('discipulos.index');
     }
 
-    public function store(Request $request){
+    public function store(Trainer $trainer, Request $request){
         if($request->ajax()){
             $discipulo = new Discipulo();
             $discipulo->name = $request->input('name');
             $discipulo->clase = $request->input('clase');
             $discipulo->picture = $request->input('picture');
-            $discipulo->save();
+            $discipulo->trainer()->associate($trainer)->save();
+            //$discipulo->save();
 
             return response()->json([
+                "trainer" => $trainer,
                 "message" => "Discipulo Creado Correctamente",
-                "discipulo" => $discipulo
+                //"discipulo" => $discipulo
             ], 200);
         }
     }
