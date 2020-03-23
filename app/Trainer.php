@@ -16,4 +16,9 @@ class Trainer extends Model
     {
         return 'slug';
     }
+
+    public function discipulos()
+    {
+        return $this->hasMany('LaraPok\Discipulo');
+    }
 }

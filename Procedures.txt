@@ -1121,8 +1121,46 @@ Laravel nos provee de un par de dependencias con Bootstrap y Vue porque son muy 
 48. Refactor en componentes
 Hemos ido creando componentes de forma desordenada simplemente para ver que estaban funcionales. Por ello vamos a organizarlos.
 En resources/components creamos una carpeta adecuada para cada tipo de archivo que voy a estar tratando. Cree una carpeta 'discipulos' y otra carpeta 'widgets' 
+49. Definiendo relacion uno a muchos
+One To Many - En la documentacion de laravel podemos ver como se establece esta relacion con Eloquent. Ademas debemos recordar que Eloquent va a asignar el nombre la llave foranea que es el nombre del modelo padre como sigue: 
+    "padre_id"
+Ahora en el proyecto abrimos los modelos Trainer y Discipulo. Ademas en este momento Discipulo no cuenta con el atributo que lo relacione con algun trainer. Eso lo hacemos en la consola:
+    php artisan make:migration add_trainer_id_to_discipulo_table
+Ahora en este archivo:
+    public function up()
+    {
+        Schema::table('discipulos', function (Blueprint $table) {
+            $table->integer('trainer_id')->unsigned();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('discipulos', function (Blueprint $table) {
+            $table->dropColumn('trainer_id');
+        });
+    }
+Luego en la consola:
+    php artisan migrate
+OJO:
+    ---Esto de agregar un nuevo atributo o una nueva columna o un nuevo atributo a una de nuestras tablas en la base de datos siempre debemos crear una nueva migration porque sino artisan va a borrar toda la informacion que tengamos en nuestro registro. Asi que como hemos hecho aqui debe hacerse siempre---
+Ahora desde la documentacion en la clase Trainer copiamos la public function comments que aparecer alli y la adecuamos a nuestra aplicacion:
+    public function discipulos()
+    {
+        return $this->hasMany('LaraPok\Discipulo');
+    }
+Ahora dentro de nuestra clase Discipulo copiamos la public function post que aparece alli y la adecuamos a nuestra aplicacion:
+    public function trainer()
+    {
+        return $this->belongsTo('LaraPok\Trainer');
+    }
 
 
 
 
-Quede en el video #49 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #50 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
