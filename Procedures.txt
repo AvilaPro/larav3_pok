@@ -1211,8 +1211,158 @@ Ahora en DiscipuloController:
             ], 200);
         }
     }
+51. Listando modelos asociados
+NOTA: AQUI CAMBIE LAS REGLAS DE PRESENTACION DE LO QUE IBA DE PROYECTO Y REACOMODE LOS COMPONENTES A UNA MEJOR MANERA DE VERSE Y DE EJECUTARSE, CREE UN COMPONENTE PADRE "contain-list.vue" Y ALLI AGREGUE LOS COMPONENETES YA CREADOS, SEGUIDO DE ESO Y MUY PERO MUY IMPORTANTE EN EL CONTROLADOR "DiscipuloController" EN LA RESPUESTA DE LA FUNCION STORE:
+    public function store(Trainer $trainer, Request $request){
+        if($request->ajax()){
+            $discipulo = new Discipulo();
+            $discipulo->name = $request->input('name');
+            $discipulo->clase = $request->input('clase');
+            $discipulo->picture = $request->input('picture');
+            $discipulo->trainer()->associate($trainer)->save();
+            //$discipulo->save();
+
+            return response()->json([
+                "trainer" => $trainer,
+                "discipulo" => $discipulo,     <-------------SUMAMENTE IMPORTANTE PORQUE SINO EL RENDER NO IBA A ENCONTRAR LAS PROPIEDADES DEL OBJETO DISCIPULO Y NO IBA A CARGAR LOS DATOS EN LA VISTA SHOW APENAS SE AGREGASE UN NUEVO DISCIPULO, ESTA LINEA DE CODIGO AQUI ES SUPER IMPORTANTE.
+                "message" => "Discipulo Creado Correctamente",
+                //"discipulo" => $discipulo
+            ], 200);
+        }
+    }
+Ahora queremos que en la vista show de nuestros trainers se vean sus discipulos asociados.
+Lo primero es agregar la etiqueta que lista los discipulos:
+    <contain-list></contain-list>
+Luego en routes/web debemos corregir la ruta que se encarga de mostrar para que este muestre correctamente la relacion de discipulos con trainer.
+    Route::get('trainers/{trainer}/discipulos', 'DiscipuloController@index');
+Y luego acomodamos nuestros componentes de vue el list.vue:
+    <template>
+    <div class="col-sm" >
+        <div class="card text-center" style="width: 18rem; margin-top: 70px" >
+                
+            <img style="height: 150px; width:150px; backgroud-color: #EFEFEF; margin:20px" class="card-img-top rounded-circle mx-auto d-block" v-bind:src="discipulo.picture" alt="">
+            
+            <div class="card-body">
+                <h5 class="card-title">{{ discipulo.name }}</h5>
+                <p class="card-text">{{ discipulo.clase }}</p>
+                <a href="/trainers/" class="btn btn-primary">Conocer Mas</a>
+            </div>
+
+        </div>
+    </div>
+    </template>
+
+    <script>
+        export default {
+            props: ['discipulo'],
+
+            mounted() {
+                console.log('Component list')
+                
+            },   
+        }
+    </script>
+El componente card-discipulo.vue:
+    <template>
+    <div class="col-sm" v-if="discipulo">
+        <div class="card text-center" style="width: 18rem; margin-top: 70px" >       
+            <img style="height: 150px; width:150px; backgroud-color: #EFEFEF; margin:20px" class="card-img-top rounded-circle mx-auto d-block" v-bind:src="discipulo.picture" alt="">
+            <div class="card-body">
+                <h5 class="card-title">{{ discipulo.name }}</h5>
+                <p class="card-text">{{ discipulo.clase }}</p>
+                <a href="/trainers/" class="btn btn-primary">Conocer Mas</a>
+            </div>
+        </div>
+    </div>
+    </template>
+
+    <script>
+        export default {
+            props: ['discipulo'],
+        }
+    </script>
+El componente add.vue:
+    <template>
+        <div class="modal fade" id="addDiscipulo" role="dialog" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Agregar Discipulo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                <form @submit.prevent="saveDiscipulo()">
+                    <div class="form-group">
+                    <label>Discipulo</label>
+                    <input type="text" class="form-control" placeholder="Ingresa el nombre del Discipulo" v-model="name">
+                </div>
+                        <div class="form-group">
+                    <label>Clase del Discipulo</label>
+                    <input type="text" class="form-control" placeholder="Ingresa la clase a la que pertenece" v-model="clase">
+                </div>
+                <div class="form-group">
+                    <label>Picture</label>
+                    <input type="text" class="form-control" placeholder="Ingresa la url de una imagen" v-model="picture">
+                </div>
+                <button type="submit" class="btn btn-primary">Guardar</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    </template>
+
+    <script>
+        export default {
+            data: function() {
+            return {
+                name:'',
+                clase:'',
+                picture:''
+            }
+            },
+            methods: {
+                saveDiscipulo: function(){
+                let currentRoute = window.location.pathname;
+                //console.log(currentRoute); Usado en el cap 50 para ver que se guarda correctamente la ruta actual
+
+                axios.post(`http://127.0.0.1:8000${currentRoute}/discipulos`, {
+                    name: this.name,
+                    clase: this.clase,
+                    picture: this.picture
+                })
+                .then((response) => {
+                    //EventBus.$emit('discipulo-added', res.data.discipulo)
+                    console.log(response.data)
+                    const disc = response.data.discipulo
+                    this.$emit('new', disc);
+                    
+                    $('#addDiscipulo').modal('hide')
+                    $('.modal-backdrop').remove()
+                })
+                .catch(function(err){
+                    console.log(err)
+                });
+                this.name = '';
+                this.clase = '';
+                this.picture = '';
+                /* console.log(this.name)
+                console.log(this.clase)
+                console.log(this.picture) */
+                }
+            }
+        }
+    </script>
+Y el archivo app.js:
+    Vue.component('contain-list', require('./components/discipulos/contain-list.vue').default);
+    Vue.component('list-of-discipulos', require('./components/discipulos/list.vue').default);
+    Vue.component('spinner', require('./components/widgets/Spinner.vue').default);
+    Vue.component('modal-button', require('./components/discipulos/modal-button.vue').default);
+    Vue.component('card-discipulo', require('./components/discipulos/card-discipulo.vue').default);
+    Vue.component('create-form-discipulo', require('./components/discipulos/add.vue').default);
 
 
 
-
-Quede en el video #51 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
+Quede en el video #52 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt

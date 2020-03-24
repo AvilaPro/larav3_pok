@@ -8,10 +8,14 @@ use LaraPok\Trainer;
 
 class DiscipuloController extends Controller
 {
-    public function index(Request $request){
+    public function index(Trainer $trainer, Request $request){
         if($request->ajax()){
-            $discipulos = Discipulo::all();
+            $discipulos = $trainer->discipulos;
             return response()->json($discipulos, 200);
+            //return response()->json($discipulos, 200);
+            /* return response()->json([
+                "trainer" => $trainer
+            ], 200); */
             /* return response()->json([
                 ['id' => 1, 'name' => 'Juan'],
                 ['id' => 2, 'name' => 'Eduardo'],
@@ -32,6 +36,7 @@ class DiscipuloController extends Controller
 
             return response()->json([
                 "trainer" => $trainer,
+                "discipulo" => $discipulo,
                 "message" => "Discipulo Creado Correctamente",
                 //"discipulo" => $discipulo
             ], 200);
