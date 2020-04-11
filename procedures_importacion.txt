@@ -1,20 +1,63 @@
-1. Debemos ejecutar composer install.
+1. Debemos ejecutar en el terminal: composer install.
 
-2. Debemos crear una base de datos con el nombre donde se 
-alojaran los datos.
-Recordar modificar el archivo .env el nombre de esta base de datos
-(Si no esta el archivo .env debemos tomar el .env.examples y
-copiar lo que hay alli y usarlo como modelo para crear el .env 
-manualmente
+2. Debemos ejecutar en el terminal: npm install
 
-3. Verificar que exista el archivo server.php (que en versiones
-anteriores a 6.X de laravel no se instalaba automaticamente en los
-proyectos y estar pendientes si es necesario luego editarlo.
+3. Debemos ejecutar en el terminal: php artisan key:generate (este sobre todo en proyectos que se estan importando, cuando creamos un proyecto nuevo generalmente este Key se genera automaticamente).
 
-Si este no existe, lo mejor es copiarlo de otro proyecto ya existente y agregarlo a la raiz de nuestro proyecto.
+4. Debemos crear una base de datos con el nombre donde se alojaran los datos.
+  Recordar modificar el archivo .env el nombre de esta base de datos
+  (Si no esta el archivo .env debemos tomar el .env.examples y copiar lo que hay alli y usarlo como modelo para crear el .env manualmente)
+  Como sigue:
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=opiniones
+    DB_USERNAME=root
+    DB_PASSWORD=
+  En nuestro caso el username y el password se han dejado asi por ser un proyecto local o en desarrollo pero en un servidor mas si esta en produccion deben estar bien definidos estos datos.
 
-4. Ejecutar el comando php artisan migrate (con esto se crearan
-las tablas en la base de datos que son necesarias para que la 
-aplicacion funcione en su totalidad y correctamente.
+5. Verificar que exista el archivo server.php (que en versiones anteriores a 6.X de laravel no se instalaba automaticamente en los proyectos y estar pendientes si es necesario luego editarlo.
+
+  Esta edicion consta de lo siguiente; originalmente el archivo server.php de la raiz del proyecto se vera asi:
+    <?php
+
+    /**
+    * Laravel - A PHP Framework For Web Artisans
+    *
+    * @package  Laravel
+    * @author   Taylor Otwell <taylor@laravel.com>
+    */
+
+    $uri = urldecode(
+        parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH)
+    );
+
+    // This file allows us to emulate Apache's "mod_rewrite" functionality from the
+    // built-in PHP web server. This provides a convenient way to test a Laravel
+    // application without having installed a "real" web server software here.
+    if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
+        return false;
+    }
+
+    require_once __DIR__.'/public/index.php';
+
+  Note lo siguiente:
+    if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
+        return false;
+    }
+    require_once __DIR__.'/public/index.php';
+
+  Donde dice __DIR__ debera copiar la direccion donde esta alojado el proyecto; si esta ejecutando en local y utiliza (como en mi caso wampserver, anote la direccion completa donde esta alojado el proyecto), quedaria asi:
+    if ($uri !== '/' && file_exists('C:/wamp64/www/larav2_opinion/public'.$uri)) {
+        return false;
+    }
+
+    require_once 'C:/wamp64/www/larav2_opinion/public/index.php';
+
+  LISTO.
+
+  Nota: Si este (server.php) no existe, lo mejor es copiarlo de otro proyecto ya existente y agregarlo a la raiz de nuestro proyecto.
+
+6. Ejecutar el comando php artisan migrate (con esto se crearan las tablas en la base de datos que son necesarias para que la aplicacion funcione en su totalidad y correctamente.
 
 
