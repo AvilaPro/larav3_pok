@@ -1363,6 +1363,3 @@ Y el archivo app.js:
     Vue.component('card-discipulo', require('./components/discipulos/card-discipulo.vue').default);
     Vue.component('create-form-discipulo', require('./components/discipulos/add.vue').default);
 
-
-
-Quede en el video #52 sin iniciar aun  de la serie: https://www.youtube.com/playlist?list=PLIddmSRJEJ0sxS-RmqdRMlkyWOQWvEGEt
